@@ -59,7 +59,7 @@
       <ul>
         <li><a href="projectManage.html">管理的项目</a></li>
         <li><a href="projectTest.html">测试的项目</a></li>
-        <li><a href="projectMaintain.html">维护的项目</a></li>
+        <li><a href="projectMaintain.php">维护的项目</a></li>
       </ul>
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Bug</span> <span class="label label-important">3</span></a>
