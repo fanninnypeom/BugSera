@@ -108,6 +108,28 @@
         </div>
       </div>
     </div>
+
+<?php  $name='Ha';
+        $content='NiHao';
+ ?>
+
+    <?php
+    echo '<div class="row-fluid">
+      <div class="span12">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-list"></i> </span>
+            <h5><a href="project.html">';
+      echo $name;
+      echo '</a></h5>
+          </div>
+          <div class="widget-content"> 
+      ';
+      echo $content;
+      echo '</div>
+        </div>
+      </div>
+    </div>'; 
+    ?>
   <div class="row-fluid">  
       <div class="span12">
         <div class="widget-box">
