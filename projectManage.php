@@ -109,7 +109,9 @@
       </div>
     </div>
 
-<?php  $name='Ha';
+<?php   
+
+        $name='Ha';
         $content='NiHao';
  ?>
 
