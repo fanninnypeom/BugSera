@@ -10,25 +10,27 @@ if (!$con)
 mysql_select_db("BugFade", $con);
 
 $result = mysql_query("select * from total where name='users'") or die(mysql_error());//得到已有用户的数量
-print_r(mysql_fetch_array($result));
+//print_r(mysql_fetch_array($result));
 //$r=mysql_fetch_array($result,MYSQL_NUM);
-$re=array();
-$rowCount=0;
-echo "length1";
+//$re=array();
+//$rowCount=0;
+//echo "length1";
 //while(
-	$row = mysql_fetch_array($result,MYSQL_NUM);
+	$row = mysql_fetch_array($result);//这个函数第一次被调用可以得到数据，再调用就没数据了，注意一下
 //	)
 //  {
-  	echo "length";
-  	echo $row[1];
+//  print_r(mysql_fetch_array($result));
+//    echo $row;
+//  	echo "LLength";
+//  	echo $row[1];
 //  $re[0]=$row;
 //  print_r(mysql_fetch_array($row));
 //  }
-$re[0]=mysql_fetch_assoc($result);
+//$re[0]=mysql_fetch_assoc($result);
 $rowCount=$row['length'];
 $rowCount=$rowCount+1;
-echo $rowCount;
-$sql;
+//echo $rowCount;
+//$sql;
 if($rowCount==1	){
 	$sql="INSERT INTO total (name, length)
 VALUES
@@ -54,15 +56,19 @@ $sql="INSERT INTO users (ID, Name, Password,Email,Reputation)
 VALUES
 ('user$rowCount','$_POST[Username]','$_POST[Password]','$_POST[Email]',0)";
 //reputation为声望(积分),初始值为0
-echo $sql;
+//echo $sql;
 
 if (!mysql_query($sql,$con))
   {
   die('Error: ' . mysql_error());
   }
-echo "1 record added";
+//echo "1 record added";
 
-mysql_close($con)
+mysql_close($con);
+
+header("Location: http://127.0.0.1");//跳转回首页
+//确保重定向后，后续代码不会被执行
+exit;
 ?>
 
 

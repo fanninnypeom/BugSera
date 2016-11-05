@@ -40,7 +40,7 @@
                    
                     <span class="pull-right"><input type="submit" 
                     href="index.php "
-                    class="btn btn-success" /> Register</a></span>
+                    class="btn btn-success" /> Register</input></span>
                 </div>
             </form>
             <form id="recoverform" action="#" class="form-vertical">
