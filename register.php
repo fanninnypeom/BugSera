@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-actions">
                    
-                    <span class="pull-right"><input type="submit" 
+                    <span class="pull-right"><input type="submit"
                     href="index.php "
                     class="btn btn-success" /> Register</input></span>
                 </div>

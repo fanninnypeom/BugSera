@@ -21,7 +21,7 @@ $_SESSION["login"]=1;
 else
 $_SESSION["login"]=0;
 
-$_SESSION["ID"]=$row['userID'];
+$_SESSION["ID"]=$row['ID'];
 
 mysql_close($con);
 

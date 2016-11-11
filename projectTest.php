@@ -1,3 +1,12 @@
+<?php
+Session_Start(); 
+if(!$_SESSION["login"]){
+header("Location: http://127.0.0.1/error404.html");//
+exit();  
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,15 +29,22 @@
 <!--close-Header-part--> 
 
 <!--top-Header-menu-->
+
 <div id="user-nav" class="navbar navbar-inverse">
   <ul class="nav">
-    <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">Welcome User</span><b class="caret"></b></a>
+    <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">Welcome <?php 
+       
+    if(count($_SESSION)!=0&&$_SESSION["login"]==1){
+    echo $_SESSION["usr"];
+}
+    else
+      echo "visitor";
+     ?>
+</span><b class="caret"></b></a>
       <ul class="dropdown-menu">
         <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
         <li class="divider"></li>
         <li><a href="#"><i class="icon-check"></i> My Tasks</a></li>
-        <li class="divider"></li>
-        <li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
       </ul>
     </li>
     <li class="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">Messages</span> <span class="label label-important">5</span> <b class="caret"></b></a>
@@ -43,9 +59,25 @@
       </ul>
     </li>
     <li class=""><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">Settings</span></a></li>
-    <li class=""><a title="" href="login.html"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+    <li class=""><a title="" href=
+<?php 
+    if(count($_SESSION)!=0&&$_SESSION["login"]==1)
+    echo "insertAction/logoutAction.php";
+    else
+      echo "Login.php";
+     ?>
+    ><i class="icon icon-share-alt"></i> <span class="text">
+<?php 
+    if(count($_SESSION)!=0&&$_SESSION["login"]==1)
+    echo "Logout";
+    else
+      echo "Login";
+     ?>
+    </span></a></li>
+    <li class=""><a title="" href="register.php"><i class="icon icon-plus"></i> <span class="text">Register</span></a></li>
   </ul>
 </div>
+
 
 <!--start-top-serch-->
 <div id="search">
@@ -59,7 +91,7 @@
       <ul>
         <li><a href="projectManage.html">管理的项目</a></li>
         <li><a href="projectTest.html">测试的项目</a></li>
-        <li><a href="projectMaintain.html">维护的项目</a></li>
+        <li><a href="projectMaintain.php">维护的项目</a></li>
       </ul>
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Bug</span> <span class="label label-important">3</span></a>
@@ -92,35 +124,56 @@
 
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">负责维护的项目</a> </div>
-    <h1>负责维护的项目 </h1>
+    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">管理的项目</a> </div>
+
+    <h1>测试的项目 </h1>
+    
   </div>
   <div class="container-fluid">
     <hr>
-    <div class="row-fluid">
-      <div class="span12">
-        <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-list"></i> </span>
-            <h5><a href="project.html">DaemonTime</a></h5>
-          </div>
-          <div class="widget-content"> 
-          时间管理APP</div>
-        </div>
-      </div>
-    </div>
-  <div class="row-fluid">  
-      <div class="span12">
-        <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-list"></i> </span>
-            <h5><a href="project.html">滴滴打车 </a></h5>
-          </div>
-          <div class="widget-content"> 
-          p2p打车软件 </div>
-        </div>
-      </div>
-
-    </div>
     
+<?php   
+    $con = mysqli_connect("localhost","root","");
+  if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+  mysqli_select_db($con,"BugFade");
+  $id=$_SESSION["ID"];
+  $s="select projectID from "."$id"."project";
+  $result = mysqli_query($con,$s);
+    while($row = mysqli_fetch_array($result,MYSQLI_NUM)){
+        $s1="select memberID from $row[0]"."membermanage where position='developer'";
+        $result1 = mysqli_query($con,$s1);
+        if(count(mysqli_fetch_array($result1,MYSQLI_NUM)[0])){
+        $s2="select * from projects where ID='$row[0]'";
+        $result2 = mysqli_query($con,$s2);
+        $t=mysqli_fetch_array($result2,MYSQLI_NUM);
+        $name=$t[5];
+        $content=$t[4];
+        $projectID=$row[0];
+    echo '<div class="row-fluid">
+      <div class="span12">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-list"></i> </span>
+            <h5><a href="project.php?ID='."$projectID".'&type=1">';//type=0代表进入者身份未确定type=1代表管理员进入，type=2代表开发人员进入
+      //type=3代表测试员进入，type=4代表游客进入 
+      echo $name;
+      echo '</a></h5>
+          </div>
+          <div class="widget-content"> 
+      ';
+      echo $content;
+      echo '</div>
+        </div>
+      </div>
+    </div>';  
+        }
+        
+    }
+       
+    ?>
+
   </div>
 </div>
 <!--Footer-part-->
@@ -128,10 +181,52 @@
   <div id="footer" class="span12"> 2016 &copy; WuNing &amp;LiuYing. Power by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 
+<div  class="widget-box" id="projectForm" style="display:none ;position:absolute; top:100px; right:600px;width:600px; height:260px; " >
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>新建项目</h5>
+        </div>
+        <div class="widget-content nopadding">
+          <form action="insertAction/projectCreateAction.php" method="post" class="form-horizontal">
+            <div class="control-group">
+              <label class="control-label">项目名称 :</label>
+              <div class="controls">
+                <input style="width:350px;" type="text" class="span11" placeholder="projectName" id="projectName"  name="projectName"/>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">截止时间 :</label>
+              <div class="controls">
+                <input style="width:350px;" type="text" class="span11" id="dueTime" placeholder="截止时间" name="dueTime"/>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">项目描述</label>
+              <div class="controls">
+                <textarea style="width:350px;" class="span11" name="description" id="description"></textarea>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button onclick="submit()" type="submit" class="btn btn-success" >创建</button>
+            </div>
+          </form>
+        </div>
+      </div>
 <!--end-Footer-part-->
 <script src="js/jquery.min.js"></script> 
 <script src="js/jquery.ui.custom.js"></script> 
 <script src="js/bootstrap.min.js"></script> 
 <script src="js/matrix.js"></script>
+<script type="text/javascript">
+function popForm(){
+//  console.log("~");
+
+  $("#projectForm").css("display","");
+}
+function submit(){
+  $("#projectForm").css("display","none");
+}
+</script>
+
+
 </body>
 </html>

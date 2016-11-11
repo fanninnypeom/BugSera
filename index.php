@@ -1,7 +1,10 @@
 <?php
 Session_Start(); 
 
-
+if(!$_SESSION["login"]){
+header("Location: http://127.0.0.1/error404.php");//
+exit();  
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +39,6 @@ Session_Start();
        
     if(count($_SESSION)!=0&&$_SESSION["login"]==1){
     echo $_SESSION["usr"];
-    echo $_SESSION["login"];
 }
     else
       echo "visitor";
@@ -78,29 +80,36 @@ Session_Start();
     <li class=""><a title="" href="register.php"><i class="icon icon-plus"></i> <span class="text">Register</span></a></li>
   </ul>
 </div>
+
+<div id="all">
+</div>
 <!--close-top-Header-menu-->
 <!--start-top-serch-->
 <div id="search">
-  <input type="text" placeholder="Search project..."/>
-  <button type="submit" class="tip-bottom" title="Search"><i class="icon-search icon-white"></i></button>
+
+  <button type="submit" class="tip-bottom" title="Show">浏览所有项目<i class="icon-search icon-white" onclick="showAllProject()"></i></button>
+  <input type="text" id="searchProject" placeholder="Search project..."/>
+  <button type="submit" class="tip-bottom" title="Search"><i class="icon-search icon-white" onclick="search()"></i></button>
 </div>
+
+
 <!--close-top-serch-->
 <!--sidebar-menu-->
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
   <ul>
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>项目</span> <span class="label label-important">3</span></a>
       <ul>
-        <li><a href="projectManage.html">管理的项目</a></li>
-        <li><a href="projectTest.html">测试的项目</a></li>
+        <li><a href="projectManage.php">管理的项目</a></li>
+        <li><a href="projectTest.php">测试的项目</a></li>
         <li><a href="projectMaintain.php">维护的项目</a></li>
       </ul>
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Bug</span> <span class="label label-important">3</span></a>
       <ul>
-        <li><a href="bugSubmit.html">Bug &amp; 提交</a></li>
-        <li><a href="bugCheck.html">Bug &amp; 审核</a></li>
-        <li><a href="bugSolve.html">Bug &amp; 解决</a></li>
-        <li><a href="bugClaim.html">Bug &amp; 领取</a></li>
+        <li><a href="bugSubmit.php">Bug &amp; 提交</a></li>
+        <li><a href="bugCheck.php">Bug &amp; 审核</a></li>
+        <li><a href="bugSolve.php">Bug &amp; 解决</a></li>
+        <li><a href="bugClaim.php">Bug &amp; 领取</a></li>
       </ul>
     </li>
     <li><a href="solutions.html"><i class="icon icon-tint"></i> <span>解决方案</span></a></li>
@@ -135,14 +144,14 @@ Session_Start();
   <div class="container-fluid">
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
-        <li class="bg_lb"> <a href="projectManage.php"> <i class="icon-dashboard"></i> <span class="label label-important">20</span> 管理的项目 </a> </li>
-        <li class="bg_lg span3"> <a href="projectTest.html"> <i class="icon-signal"></i> 测试的项目</a> </li>
-        <li class="bg_ly"> <a href="projectMaintain.html"> <i class="icon-inbox"></i><span class="label label-success">101</span> 负责维护的项目 </a> </li>
-        <li class="bg_lo"> <a href="bugSubmit.html"> <i class="icon-th"></i> 已提交的Bug</a> </li>
-        <li class="bg_ls"> <a href="bugCheck.html"> <i class="icon-fullscreen"></i> Bug &amp; 审核</a> </li>
-        <li class="bg_lo span3"> <a href="bugSolve.html"> <i class="icon-th-list"></i> Bug &amp; 解决</a> </li>
-        <li class="bg_lb"> <a href="bugClaim.html"> <i class="icon-pencil"></i>Bug认领区</a> </li>
-        <li class="bg_ls"> <a href="solutions.html"> <i class="icon-tint"></i> 我的解决方案</a> </li>
+        <li class="bg_lb"> <a href="projectManage.php"> <i class="icon-dashboard"></i> <span class="label label-important"></span> 管理的项目 </a> </li>
+        <li class="bg_lg span3"> <a href="projectTest.php"> <i class="icon-signal"></i> 测试的项目</a> </li>
+        <li class="bg_ly"> <a href="projectMaintain.php"> <i class="icon-inbox"></i><span class="label label-success"></span> 负责维护的项目 </a> </li>
+        <li class="bg_lo"> <a href="bugSubmit.php"> <i class="icon-th"></i> 已提交的Bug</a> </li>
+        <li class="bg_ls"> <a href="bugCheck.php"> <i class="icon-fullscreen"></i> Bug &amp; 审核</a> </li>
+        <li class="bg_lo span3"> <a href="bugSolve.php"> <i class="icon-th-list"></i> Bug &amp; 解决</a> </li>
+        <li class="bg_lb"> <a href="bugClaim.php"> <i class="icon-pencil"></i>Bug认领区</a> </li>
+        <li class="bg_ls"> <a href="solutions.php"> <i class="icon-tint"></i> 我的解决方案</a> </li>
 
 <!--
         <li class="bg_lg"> <a href="calendar.html"> <i class="icon-calendar"></i> Calendar</a> </li>
@@ -235,6 +244,40 @@ Session_Start();
 // resets the menu selection upon entry to this page:
 function resetMenu() {
    document.gomenu.selector.selectedIndex = 2;
+}
+
+<?php
+/*
+//用于搜索功能的php代码...以工程的名字进行搜索...有点麻烦...
+暂不实现...
+  $con = mysqli_connect("localhost","root","");
+  if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+  mysqli_select_db($con,"BugFade");
+  $id=$_SESSION["ID"];
+  $s="select projectID from "."$id"."project where projectName= and ID='$id'";
+  $result = mysqli_query($con,$s);
+  $row=mysqli_fetch_array($result,MYSQLI_NUM);
+  if(count($row)){
+    $s1="select position from "."$row[1]"."membermanage where memberID='$id'";
+    $result1 = mysqli_query($con,$s1);
+    $row1=mysqli_fetch_array($result1,MYSQLI_NUM);
+    echo $row1[1]
+  }
+  */
+   ?>
+function showAllProject(){
+  console.log("~~~~~~~");
+  window.location.href = 'http://127.0.0.1/allProject.php';
+}
+function search(){
+  console.log("-------");
+  var name=$("#searchProject").attr("value");
+  var ID=$("#searchProject").attr("value","<?php
+   ?>");
+ //   window.location.href = 'http://127.0.0.1/project.php?type=0&name='+name;
 }
 </script>
 </body>

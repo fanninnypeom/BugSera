@@ -1,4 +1,6 @@
 	<?php
+Session_Start(); 
+
 //用于注册用户的信息插入
 $con = mysql_connect("localhost","root","");
 if (!$con)
@@ -37,6 +39,18 @@ if (!mysql_query($sql,$con))
   die('Error: ' . mysql_error());
   }
 //echo "1 record added";
+$sql = "CREATE TABLE user"."$rowCount"."project 
+(
+ID varchar(20),
+projectID varchar(20),
+projectName varchar(20)
+)";//这个表用来记录每个用户和哪些项目有关联，在查找的时候就只需要到相应项目的表中去查询了
+
+if (!mysql_query($sql,$con))
+  {
+  die('Error: ' . mysql_error());
+  }
+
 
 mysql_close($con);
 

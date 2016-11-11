@@ -1,3 +1,7 @@
+<?php
+Session_Start(); 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,15 +24,23 @@
 <!--close-Header-part--> 
 
 <!--top-Header-menu-->
+
 <div id="user-nav" class="navbar navbar-inverse">
   <ul class="nav">
-    <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">Welcome User</span><b class="caret"></b></a>
+    <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">Welcome <?php 
+       
+    if(count($_SESSION)!=0&&$_SESSION["login"]==1){
+    echo $_SESSION["usr"];
+    echo $_SESSION["login"];
+}
+    else
+      echo "visitor";
+     ?>
+</span><b class="caret"></b></a>
       <ul class="dropdown-menu">
         <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
         <li class="divider"></li>
         <li><a href="#"><i class="icon-check"></i> My Tasks</a></li>
-        <li class="divider"></li>
-        <li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
       </ul>
     </li>
     <li class="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">Messages</span> <span class="label label-important">5</span> <b class="caret"></b></a>
@@ -43,9 +55,25 @@
       </ul>
     </li>
     <li class=""><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">Settings</span></a></li>
-    <li class=""><a title="" href="login.html"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+    <li class=""><a title="" href=
+<?php 
+    if(count($_SESSION)!=0&&$_SESSION["login"]==1)
+    echo "insertAction/logoutAction.php";
+    else
+      echo "Login.php";
+     ?>
+    ><i class="icon icon-share-alt"></i> <span class="text">
+<?php 
+    if(count($_SESSION)!=0&&$_SESSION["login"]==1)
+    echo "Logout";
+    else
+      echo "Login";
+     ?>
+    </span></a></li>
+    <li class=""><a title="" href="register.php"><i class="icon icon-plus"></i> <span class="text">Register</span></a></li>
   </ul>
 </div>
+
 
 <!--start-top-serch-->
 <div id="search">
@@ -92,43 +120,42 @@
 
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Bug认领区</a> </div>
-    <h1>Bug认领区 </h1>
+    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">解决方案</a> </div>
+    <h1>解决方案 </h1>
   </div>
   <div class="container-fluid">
     <hr>
-    <div class="widget-box">
-          <div class="widget-title"> <span class="icon"><i class="icon-ok"></i></span>
-            <h5>无人问津的Bug</h5>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-list"></i> </span>
+            <h5><a href="project.html">ZF_0101</a></h5>
+            <span class="icon"></span>
+            <span class="icon"> 来源Bug </span>
+            <h5><a href="bug.html">can't run demo.py</a></h5>
+            <h5><span class="date badge badge-important">待验证</span></h5>
           </div>
-          <div class="widget-content">
-            <div class="todo">
-              <ul>
-                <li class="clearfix">
-                  <div class="txt"> <a href="bug.html" > Luanch This theme on Themeforest </a><span class="by label">Nirav</span> <span class="date badge badge-important">Today</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> <a href="bug.html" >Manage Pending Orders </a><span class="by label">Alex</span> <span class="date badge badge-warning">Today</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> <a href="bug.html" >MAke your desk clean </a> <span class="by label">Admin</span> <span class="date badge badge-success">Tomorrow</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"><a href="bug.html" > Today we celebrate the great looking theme </a> <span class="by label">Admin</span> <span class="date badge badge-info">08.03.2013</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"><a href="bug.html" > Manage all the orders </a><span class="by label">Mark</span> <span class="date badge badge-info">12.03.2013</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <div class="widget-content"> 
+          注释掉train_net.py中的set_mode_gpu,重新make</div>
         </div>
+      </div>
+    </div>
+  <div class="row-fluid">  
+      <div class="span12">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-list"></i> </span>
+            <h5><a href="project.html">TA_1211</a></h5>
+            <span class="icon"></span>
+            <span class="icon"> 来源Bug </span>
+            <h5><a href="bug.html">can't run demo.py</a></h5>
+            <h5><span class="date badge badge-important">通过</span></h5>
+          </div> 
+          <div class="widget-content"> 
+          使用gcc5.0重新编译protobuf即可 </div>
+        </div>
+      </div>
 
+    </div>
     
   </div>
 </div>

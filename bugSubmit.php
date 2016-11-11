@@ -1,10 +1,5 @@
 <?php
 Session_Start(); 
-if(!$_SESSION["login"]){
-header("Location: http://127.0.0.1/error404.html");//
-exit();  
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +31,7 @@ exit();
        
     if(count($_SESSION)!=0&&$_SESSION["login"]==1){
     echo $_SESSION["usr"];
+    echo $_SESSION["login"];
 }
     else
       echo "visitor";
@@ -91,7 +87,7 @@ exit();
       <ul>
         <li><a href="projectManage.html">管理的项目</a></li>
         <li><a href="projectTest.html">测试的项目</a></li>
-        <li><a href="projectMaintain.php">维护的项目</a></li>
+        <li><a href="projectMaintain.html">维护的项目</a></li>
       </ul>
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Bug</span> <span class="label label-important">3</span></a>
@@ -124,62 +120,44 @@ exit();
 
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">管理的项目</a> </div>
-<button class="btn btn-large btn-danger" style="position: relative;
-  left: 830px;
-  top: 30px;"
-  onclick="popForm()"
-   >创建新项目</button>
-    <p  style="position: relative;
-  left: 30px;
-  top: 0px;font-size:35px;">管理的项目 </p>
-    
+    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">已提交的Bug</a> </div>
+    <h1>已提交的Bug </h1>
   </div>
   <div class="container-fluid">
     <hr>
-    
-<?php   
-    $con = mysqli_connect("localhost","root","");
-  if (!$con)
-  {
-  die('Could not connect: ' . mysql_error());
-  }
-  mysqli_select_db($con,"BugFade");
-  $id=$_SESSION["ID"];
-  $s="select projectID from "."$id"."project";
-  $result = mysqli_query($con,$s);
-    while($row = mysqli_fetch_array($result,MYSQLI_NUM)){
-        $s1="select memberID from $row[0]"."membermanage where position='manager'";
-        $result1 = mysqli_query($con,$s1);
-        if(count(mysqli_fetch_array($result1,MYSQLI_NUM)[0])){
-        $s2="select * from projects where ID='$row[0]'";
-        $result2 = mysqli_query($con,$s2);
-        $t=mysqli_fetch_array($result2,MYSQLI_NUM);
-        $name=$t[5];
-        $content=$t[4];
-        $projectID=$row[0];
-    echo '<div class="row-fluid">
-      <div class="span12">
-        <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-list"></i> </span>
-            <h5><a href="project.php?ID='."$projectID".'&type=1">';// type=0代表进入者身份未确定type=1代表管理员进入，type=2代表开发人员进入
-      //type=3代表测试员进入，type=4代表游客进入 
-      echo $name;
-      echo '</a></h5>
+    <div class="widget-box">
+          <div class="widget-title"> <span class="icon"><i class="icon-ok"></i></span>
+            <h5>Bug list</h5>
           </div>
-          <div class="widget-content"> 
-      ';
-      echo $content;
-      echo '</div>
+          <div class="widget-content">
+            <div class="todo">
+              <ul>
+                <li class="clearfix">
+                  <div class="txt"> Luanch This theme on Themeforest <span class="by label">Nirav</span> <span class="date badge badge-important">Today</span> </div>
+                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
+                </li>
+                <li class="clearfix">
+                  <div class="txt"> Manage Pending Orders <span class="by label">Alex</span> <span class="date badge badge-warning">Today</span> </div>
+                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
+                </li>
+                <li class="clearfix">
+                  <div class="txt"> MAke your desk clean <span class="by label">Admin</span> <span class="date badge badge-success">Tomorrow</span> </div>
+                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
+                </li>
+                <li class="clearfix">
+                  <div class="txt"> Today we celebrate the great looking theme <span class="by label">Admin</span> <span class="date badge badge-info">08.03.2013</span> </div>
+                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
+                </li>
+                <li class="clearfix">
+                  <div class="txt"> Manage all the orders <span class="by label">Mark</span> <span class="date badge badge-info">12.03.2013</span> </div>
+                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>';  
-        }
-        
-    }
-       
-    ?>
 
+    
   </div>
 </div>
 <!--Footer-part-->
@@ -187,52 +165,10 @@ exit();
   <div id="footer" class="span12"> 2016 &copy; WuNing &amp;LiuYing. Power by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 
-<div  class="widget-box" id="projectForm" style="display:none ;position:absolute; top:100px; right:600px;width:600px; height:260px; " >
-        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-          <h5>新建项目</h5>
-        </div>
-        <div class="widget-content nopadding">
-          <form action="insertAction/projectCreateAction.php" method="post" class="form-horizontal">
-            <div class="control-group">
-              <label class="control-label">项目名称 :</label>
-              <div class="controls">
-                <input style="width:350px;" type="text" class="span11" placeholder="projectName" id="projectName"  name="projectName"/>
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label">截止时间 :</label>
-              <div class="controls">
-                <input style="width:350px;" type="text" class="span11" id="dueTime" placeholder="截止时间" name="dueTime"/>
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label">项目描述</label>
-              <div class="controls">
-                <textarea style="width:350px;" class="span11" name="description" id="description"></textarea>
-              </div>
-            </div>
-            <div class="form-actions">
-              <button onclick="submit()" type="submit" class="btn btn-success" >创建</button>
-            </div>
-          </form>
-        </div>
-      </div>
 <!--end-Footer-part-->
 <script src="js/jquery.min.js"></script> 
 <script src="js/jquery.ui.custom.js"></script> 
 <script src="js/bootstrap.min.js"></script> 
 <script src="js/matrix.js"></script>
-<script type="text/javascript">
-function popForm(){
-//  console.log("~");
-
-  $("#projectForm").css("display","");
-}
-function submit(){
-  $("#projectForm").css("display","none");
-}
-</script>
-
-
 </body>
 </html>
