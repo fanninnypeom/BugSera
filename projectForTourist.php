@@ -52,7 +52,7 @@ $createrName=$t1[1];
 
 <!--Header-part-->
 <div id="header">
-  <h1><a href="dashboard.html">Matrix Admin</a></h1>
+  <h1><a href="dashboard.php">Matrix Admin</a></h1>
 </div>
 <!--close-Header-part--> 
 
@@ -119,29 +119,29 @@ $createrName=$t1[1];
   <ul>
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>项目</span> <span class="label label-important">3</span></a>
       <ul>
-        <li><a href="projectManage.html">管理的项目</a></li>
-        <li><a href="projectTest.html">测试的项目</a></li>
-        <li><a href="projectMaintain.html">维护的项目</a></li>
+        <li><a href="projectManage.php">管理的项目</a></li>
+        <li><a href="projectTest.php">测试的项目</a></li>
+        <li><a href="projectMaintain.php">维护的项目</a></li>
       </ul>
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Bug</span> <span class="label label-important">3</span></a>
       <ul>
-        <li><a href="bugSubmit.html">Bug &amp; 提交</a></li>
-        <li><a href="bugCheck.html">Bug &amp; 审核</a></li>
-        <li><a href="bugSolve.html">Bug &amp; 解决</a></li>
-        <li><a href="bugClaim.html">Bug &amp; 领取</a></li>
+        <li><a href="bugSubmit.php">Bug &amp; 提交</a></li>
+        <li><a href="bugCheck.php">Bug &amp; 审核</a></li>
+        <li><a href="bugSolve.php">Bug &amp; 解决</a></li>
+        <li><a href="bugClaim.php">Bug &amp; 领取</a></li>
       </ul>
     </li>
-    <li><a href="solutions.html"><i class="icon icon-tint"></i> <span>解决方案</span></a></li>
+    <li><a href="solutions.php"><i class="icon icon-tint"></i> <span>解决方案</span></a></li>
 
-    <li class="content"> <span>Monthly Bandwidth Transfer</span>
+    <li class="content" style="display:none"> <span>Monthly Bandwidth Transfer</span>
       <div class="progress progress-mini progress-danger active progress-striped">
         <div style="width: 77%;" class="bar"></div>
       </div>
       <span class="percent">77%</span>
       <div class="stat">21419.94 / 14000 MB</div>
     </li>
-    <li class="content"> <span>Disk Space Usage</span>
+    <li class="content" style="display:none"> <span>Disk Space Usage</span>
       <div class="progress progress-mini active progress-striped">
         <div style="width: 87%;" class="bar"></div>
       </div>
@@ -152,7 +152,7 @@ $createrName=$t1[1];
 </div>
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">project</a> </div>
+    <div id="breadcrumb"> <a href="index.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">project</a> </div>
     <h1>项目信息</h1>
     <button class="btn btn-large btn-danger" style="position: relative;left: 430px;top: 0px;" onclick="popManager()"
    >申请成为管理人员</button>
@@ -210,8 +210,8 @@ $createrName=$t1[1];
                         ?>
                       </strong></td>
                     </tr>
-                    <tr>
-                      <td>创建人:</td>
+                 style="display:none"    <tr>
+                style="display:none"       <td>创建人:</td>
                       <td><strong>
                         <?php 
                         echo $createrName;
@@ -219,22 +219,22 @@ $createrName=$t1[1];
                       </strong></td>
                     </tr>
                   </tr>
-                    </tbody>
-                  
-                </table>
-              </div>
+                 style="display:none"    < style="display:none"/tbody>
+                style="display:none"   style="display:none" 
+        style="display:none"         </table>
+              </div style="display:none">
             </div>
         
-          </div>
+ style="display:none"          </div>
         </div>
-      </div>
-    </div>
+   style="display:none"  style="display:none"  style="display:none"  </div>
+ style="display:none"    </div>
 
 
     <hr>
     
 <!--Footer-part-->
-<div class="row-fluid">
+ style="display:none"<div class="row-fluid">
   <div id="footer" class="span12"> 2016 &copy; WuNing &amp;LiuYing. Power by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 
@@ -243,12 +243,12 @@ $createrName=$t1[1];
           <h3>备注信息</h3>
           <textarea style="width:350px;" class="span11" name="description" id="description1"></textarea>
 
-		<button class="btn btn-large btn-danger" onclick="askManager()">申请</button>
+ style="display:none"		<button class="btn btn-large btn-danger" onclick="askManager()">申请</button>
 </center>
 
       </div>
 
-<div  class="widget-box" id="tip2" style="display:none ;position:absolute; top:100px; right:600px;width:600px; height:160px; " >
+<div  class="widget-box" id="tip2" style="display:none ;position:absolute; top:100px; right:600px;width:600px; heigh style="display:none"t:160px; " >
 <center>
           <h3>备注信息</h3>
 

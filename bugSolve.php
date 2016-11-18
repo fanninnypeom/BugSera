@@ -19,7 +19,7 @@ Session_Start();
 
 <!--Header-part-->
 <div id="header">
-  <h1><a href="dashboard.html">Matrix Admin</a></h1>
+  <h1><a href="dashboard.php">Matrix Admin</a></h1>
 </div>
 <!--close-Header-part--> 
 
@@ -85,29 +85,29 @@ Session_Start();
   <ul>
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>项目</span> <span class="label label-important">3</span></a>
       <ul>
-        <li><a href="projectManage.html">管理的项目</a></li>
-        <li><a href="projectTest.html">测试的项目</a></li>
-        <li><a href="projectMaintain.html">维护的项目</a></li>
+        <li><a href="projectManage.php">管理的项目</a></li>
+        <li><a href="projectTest.php">测试的项目</a></li>
+        <li><a href="projectMaintain.php">维护的项目</a></li>
       </ul>
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Bug</span> <span class="label label-important">3</span></a>
       <ul>
-        <li><a href="bugSubmit.html">Bug &amp; 提交</a></li>
-        <li><a href="bugCheck.html">Bug &amp; 审核</a></li>
-        <li><a href="bugSolve.html">Bug &amp; 解决</a></li>
-        <li><a href="bugClaim.html">Bug &amp; 领取</a></li>
+        <li><a href="bugSubmit.php">Bug &amp; 提交</a></li>
+        <li><a href="bugCheck.php">Bug &amp; 审核</a></li>
+        <li><a href="bugSolve.php">Bug &amp; 解决</a></li>
+        <li><a href="bugClaim.php">Bug &amp; 领取</a></li>
       </ul>
     </li>
-    <li><a href="solutions.html"><i class="icon icon-tint"></i> <span>解决方案</span></a></li>
+    <li><a href="solutions.php"><i class="icon icon-tint"></i> <span>解决方案</span></a></li>
 
-    <li class="content"> <span>Monthly Bandwidth Transfer</span>
+    <li class="content" style="display:none"> <span>Monthly Bandwidth Transfer</span>
       <div class="progress progress-mini progress-danger active progress-striped">
         <div style="width: 77%;" class="bar"></div>
       </div>
       <span class="percent">77%</span>
       <div class="stat">21419.94 / 14000 MB</div>
     </li>
-    <li class="content"> <span>Disk Space Usage</span>
+    <li class="content" style="display:none"> <span>Disk Space Usage</span>
       <div class="progress progress-mini active progress-striped">
         <div style="width: 87%;" class="bar"></div>
       </div>
@@ -120,7 +120,7 @@ Session_Start();
 
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Bug &amp; 解决</a> </div>
+    <div id="breadcrumb"> <a href="index.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Bug &amp; 解决</a> </div>
     <h1>Bug &amp; 解决 </h1>
   </div>
   <div class="container-fluid">
@@ -147,18 +147,17 @@ Session_Start();
                 <li class="clearfix">
                   <div class="txt"> Today we celebrate the great looking theme <span class="by label">Admin</span> <span class="date badge badge-info">缺陷</span> </div>
                   <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> Manage all the orders <span class="by label">Mark</span> <span class="date badge badge-info">缺陷</span> </div>
+                </li><li class="clearfix">
+                  <div class="txt"> Manage  all the orders <span class="by label">Mark</span> <span class="date badge badge-info"> 缺陷</span> </div>
                   <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
                 </li>
               </ul>
             </div>
-          </div>
+           </div>
         </div>
  <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-ok"></i></span>
-            <h5>已解决的Bug</h5>
+        <h5>已解决的Bug</h5>
           </div>
           <div class="widget-content">
             <div class="todo">
@@ -172,7 +171,7 @@ Session_Start();
                   <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
                 </li>
                 <li class="clearfix">
-                  <div class="txt"> MAke your desk clean <span class="by label">Admin</span> <span class="date badge badge-success">一般</span> </div>
+                 <div class="txt"> MAke your desk clean <span class="by label">Admin</span> <span class="date badge badge-success">一般</span> </div>
                   <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
                 </li>
                 <li class="clearfix">
