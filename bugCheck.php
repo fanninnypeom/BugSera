@@ -132,26 +132,46 @@ Session_Start();
           <div class="widget-content">
             <div class="todo">
               <ul>
-                <li class="clearfix">
-                  <div class="txt"> Luanch This theme on Themeforest <span class="by label">Nirav</span> <span class="date badge badge-important">Today</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> Manage Pending Orders <span class="by label">Alex</span> <span class="date badge badge-warning">Today</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> MAke your desk clean <span class="by label">Admin</span> <span class="date badge badge-success">Tomorrow</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> Today we celebrate the great looking theme <span class="by label">Admin</span> <span class="date badge badge-info">08.03.2013</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> Manage all the orders <span class="by label">Mark</span> <span class="date badge badge-info">12.03.2013</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
+                <?php
+    //  echo "~~~~~~~~~~~~~~~~~~~";
+      
+                $con = mysqli_connect("localhost","root","");
+  if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+  mysqli_select_db($con,"bugfade");
+   $id=$_SESSION["ID"];
+   $result1=mysqli_query($con,"select projectID from $id"."project");
+   while($p=mysqli_fetch_array($result1,MYSQLI_NUM))
+   {
+    //echo $p[0];
+    $test_group=mysqli_query($con,"select memberID from $p[0]"."membermanage where(position = tester)");
+    $flag=false; 
+    if(count($test_group)<=1)
+      continue; 
+    while($t=mysqli_fetch_array($test_group,MYSQLI_NUM))
+    {
+      if($t[0]==$id)
+        $flag=true;
+    }
+    if($flag==true)
+    {
+      $bug=mysqli_query($con,"select * from $p"."buginfo where(state=waitingExam)");
+
+      while($buglist=mysqli_fetch_array($bug,MYSQLI_NUM))
+      {
+
+        echo "~~~~~~~~~~~~~~~~~~~";
+        echo $buglist[6];
+      
+        echo "<li class=\"clearfix\">
+                  <div class=\"txt\"> "."$buglist[6] "." : "." $buglist[1] "." <span class=\"by label\">"."$buglist[4]"." </span> <span class=\"date badge badge-important\">"."$buglist[3]"."</span> </div><div class=\"pull-right\"> <a class=\"tip\" href=\"#\" title=\"Edit Task\"><i class=\"icon-pencil\"></i></a> <a class=\"tip\" href=\"#\" title=\"Delete\"><i class=\"icon-remove\"></i></a> </div></li>";  
+      }
+
+    }
+   }
+               ?>
               </ul>
             </div>
           </div>

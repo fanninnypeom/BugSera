@@ -114,14 +114,14 @@ exit();
     </li>
     <li><a href="solutions.html"><i class="icon icon-tint"></i> <span>解决方案</span></a></li>
 
-    <li class="content"> <span>Monthly Bandwidth Transfer</span>
+    <li class="content" style="display:none;"> <span>Monthly Bandwidth Transfer</span>
       <div class="progress progress-mini progress-danger active progress-striped">
         <div style="width: 77%;" class="bar"></div>
       </div>
       <span class="percent">77%</span>
       <div class="stat">21419.94 / 14000 MB</div>
     </li>
-    <li class="content"> <span>Disk Space Usage</span>
+    <li class="content" style="display:none;"> <span>Disk Space Usage</span>
       <div class="progress progress-mini active progress-striped">
         <div style="width: 87%;" class="bar"></div>
       </div>

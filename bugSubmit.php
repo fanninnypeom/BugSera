@@ -155,20 +155,11 @@ Session_Start();
                 </li>";
          }
         }
-        
-    
- 
-
-
-              ?>
-                
-                
+              ?>               
               </ul >
             </div>
           </div>
-        </div>
-
-    
+        </div>   
   </div>
 </div>
 <!--Footer - part-->
