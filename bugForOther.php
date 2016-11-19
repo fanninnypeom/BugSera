@@ -140,7 +140,6 @@ $userID=$_SESSION['ID'];
   <div id="content-header">
     <div id="breadcrumb"> <a href="index.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Bug</a> </div>
   
-    <h1>Bug</h1>
     </div>
      <?php
 
@@ -173,6 +172,9 @@ $creatorName=$row[1];
 
      ?>
 
+    <h1><?php 
+echo $Name;
+     ?></h1>
 
   <div class="container-fluid">
     <hr>
@@ -223,16 +225,29 @@ $creatorName=$row[1];
           </div>
         </div>
 
-    <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-list"></i> 解决方案TA_1211</span>
+    <?php
+$re=mysqli_query($con,"select * from "."$projectID"."solutions where bugID='$bugID'");
+while($row=mysqli_fetch_array($re,MYSQLI_NUM)){
+  $re1=mysqli_query($con,"select * from users where ID='$row[3]'");
+$row1=mysqli_fetch_array($re1,MYSQLI_NUM);
+$state="";
+if($row[4]==1)
+  $state="通过";
+else
+  $state="审核中";
+  echo "
+    <div class=\"widget-box\">
+          <div class=\"widget-title\"> <span class=\"icon\"> <i class=\"icon-list\"></i> 解决方案"."$row[0]"."</span>
             <h5>解决者:</h5>
-            <span class="icon"><a href="">fanninnypeom</a></span>
-
-            <h5><span class="date badge badge-important">通过</span></h5>
+            <span class=\"icon\"><a href=\"\">"."$row1[1]"."</a></span>
+            <h5><span class=\"date badge badge-important\">"."$state"."</span></h5>
           </div> 
-          <div class="widget-content"> 
-          使用gcc5.0重新编译protobuf即可 </div>
-        </div>
+          <div class=\"widget-content\"> 
+         "."$row[1]"." </div>
+        </div>";
+}
+        ?>
+
 
   </div>
 </div>

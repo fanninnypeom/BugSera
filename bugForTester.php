@@ -138,10 +138,44 @@ $userID=$_SESSION['ID'];
   <div id="content-header">
     <div id="breadcrumb"> <a href="index.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Bug</a> </div>
   
-    <h1>Bug</h1>
+   <?php
+
+  $s="select * from $projectID"."buginfo where ID='$bugID'";
+
+  $result = mysqli_query($con,$s);
+  $t=mysqli_fetch_array($result,MYSQLI_NUM);
+  $Name=$t[6];
+  $description=$t[1];
+  $state=$t[2];
+  $time=$t[3];
+  $creatorID=$t[4];
+  $pri="";
+  if($t[5]==1){
+    $pri="一般";
+  }
+  else if($t[5]==2){
+    $pri="重要";
+  }
+  else if($t[5]==3){
+    $pri="紧急";
+  }
+  else{
+    $pri="非常紧急";
+  }
+
+$re=mysqli_query($con,"select * from users where ID='$creatorID'");
+$row=mysqli_fetch_array($re,MYSQLI_NUM);
+$creatorName=$row[1];
+
+     ?>
+
+    <h1><?php 
+echo $Name;
+     ?></h1>
+
     </div>
      
-  <div class="container-fluid">
+  <div class="container-fluid" id="allID" bugID="<?php echo $bugID; ?>" projectID="<?php echo $projectID; ?>">
     <hr>
     <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-time"></i></span>
@@ -149,6 +183,7 @@ $userID=$_SESSION['ID'];
             <h5><span class="date badge badge-important">
               <?php  echo $state; ?>
             </span></h5>
+           <button style="position:relative;top:5px;" class="btn btn-small btn-danger" onclick="changeBugState()">修改Bug状态</button> 
           </div>
           <div class="widget-content nopadding">
             <table class="table table-striped table-bordered">
@@ -189,17 +224,32 @@ $userID=$_SESSION['ID'];
 
           </div>
         </div>
-
-    <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-list"></i> 解决方案TA_1211</span>
+<?php
+$re=mysqli_query($con,"select * from "."$projectID"."solutions where bugID='$bugID'");
+while($row=mysqli_fetch_array($re,MYSQLI_NUM)){
+  $re1=mysqli_query($con,"select * from users where ID='$row[3]'");
+$row1=mysqli_fetch_array($re1,MYSQLI_NUM);
+$state="";
+if($row[4]==1)
+  $state="通过";
+else
+  $state="审核中";
+  echo "
+    <div class=\"widget-box\">
+          <div class=\"widget-title\"> <span class=\"icon\"> <i class=\"icon-list\"  ></i> 解决方案"."$row[0]"."</span>
             <h5>解决者:</h5>
-            <span class="icon"><a href="">fanninnypeom</a></span>
-
-            <h5><span class="date badge badge-important">通过</span></h5>
+            <span class=\"icon\"><a href=\"\">"."$row1[1]"."</a></span>
+            <h5><span class=\"date badge badge-important\">"."$state"."</span></h5>
+            <button style=\"position:relative;top:5px;\" class=\"btn btn-small btn-danger\"  id=\"$row[0]\" bugID=\"$bugID\" projectID=\"$projectID\" onclick=\"changeSolutionState(this)\">修改状态</button> 
           </div> 
-          <div class="widget-content"> 
-          使用gcc5.0重新编译protobuf即可 </div>
-        </div>
+          <div class=\"widget-content\"> 
+         "."$row[1]"." </div>
+        </div>";
+}
+        ?>
+
+
+
 
   </div>
 </div>
@@ -208,10 +258,135 @@ $userID=$_SESSION['ID'];
   <div id="footer" class="span12"> 2016 &copy; WuNing &amp;LiuYing. Power by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 
+
+
+<div  class="widget-box" id="modifyBugForm" style="display:none ;position:absolute; top:100px; right:400px;width:600px; height:160px; " >
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>修改Bug状态</h5>
+        </div>
+        <div class="widget-content nopadding">
+       <center>
+   <div class="input-group input-group-lg" >
+                      <div class="input-group-btn input-group-lg">
+      <select id="bugSelect" class="form-control" style="
+          width:100px;
+          appearance:none;
+          -moz-appearance:none;
+-webkit-appearance:none;
+background:url(img/arrow.jpg) no-repeat right center;
+background-color: #eee;
+background-size:20%;
+">
+      <option value="waitingExam">waitingExam</option>
+      <option value="newAdd">newAdd</option>
+      <option value="waitingCheck">waitingCheck</option>
+      <option value="doing">doing</option>
+      <option value="reOpen">reOpen</option>
+      <option value="solved">solved</option>
+      <option value="waitSolves">waitSolves</option>
+                 
+</select>
+</div>
+</div>
+ </center>
+           
+              <button onclick="modifyBug()" class="btn btn-success" >修改</button>
+            
+        </div>
+      </div>
+
+<div  class="widget-box" id="modifySolutionForm" style="display:none ;position:absolute; top:100px; right:400px;width:600px; height:160px; " >
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>修改Solution状态</h5>
+        </div>
+        <div class="widget-content nopadding">
+       <center>
+   <div class="input-group input-group-lg" >
+                      <div class="input-group-btn input-group-lg">
+      <select id="solutionSelect" class="form-control" style="
+          width:100px;
+          appearance:none;
+          -moz-appearance:none;
+-webkit-appearance:none;
+background:url(img/arrow.jpg) no-repeat right center;
+background-color: #eee;
+background-size:20%;
+">
+      <option value="0">审核中</option>
+      <option value="1">通过</option>
+</select>
+</div>
+</div>
+ </center>
+           
+              <button onclick="modifySolution()" class="btn btn-success" >修改</button>
+            
+        </div>
+      </div>
+
 <!--end-Footer-part-->
 <script src="js/jquery.min.js"></script> 
 <script src="js/jquery.ui.custom.js"></script> 
 <script src="js/bootstrap.min.js"></script> 
 <script src="js/matrix.js"></script>
+<script type="text/javascript">
+function changeBugState(){
+    $("#modifyBugForm").css("display","");
+} 
+function changeSolutionState(t){
+    $("#modifySolutionForm").css("display","");
+    $("#modifySolutionForm").attr("obj",t.id);
+      
+} 
+
+function modifyBug(){
+  $("#modifyBugForm").css("display","none");
+  var bugID=$("#allID").attr("bugID");
+  var projectID=$("#allID").attr("projectID");
+  var state=document.getElementById("bugSelect").value;
+    console.log(bugID);
+    console.log(projectID);
+    console.log(state);
+
+  $.ajax({
+    url: 'insertAction/modifyBugAction.php',
+    method:'post',
+    data: {
+    bugID: bugID,
+    state: state,
+    projectID: projectID
+  }
+})
+
+//     window.location.href="insertAction/modifyBugAction.php?projectID="+projectID+"&bugID="+bugID+"&state="+state;
+
+
+location.reload(true);   
+
+}
+function modifySolution(){
+    $("#modifySolutionForm").css("display","none");
+    var solutionID=$("#modifySolutionForm").attr("obj");
+    var bugID=$("#"+solutionID).attr("bugID");
+    var projectID=$("#"+solutionID).attr("projectID");
+    var state=document.getElementById("solutionSelect").value;
+    
+    $.ajax({
+    url: 'insertAction/modifySolutionAction.php',
+    method:'post',
+    data: {
+    solutionID: solutionID,
+    bugID: bugID,
+    projectID: projectID,
+    state: state
+  }
+})
+
+location.reload(true);   
+
+}
+
+</script>
+
 </body>
 </html>

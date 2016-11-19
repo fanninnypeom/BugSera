@@ -157,7 +157,7 @@ exit();
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-list"></i> </span>
-            <h5><a href="project.php?ID='."$projectID".'&type=3">';//type=0代表进入者身份未确定type=1代表管理员进入，type=2代表开发人员进入
+            <h5><a href="project.php?ID='."$projectID".'&type=2">';//type=0代表进入者身份未确定type=1代表管理员进入，type=2代表开发人员进入
       //type=3代表测试员进入，type=4代表游客进入 
       echo $name;
       echo '</a></h5>

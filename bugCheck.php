@@ -145,10 +145,9 @@ Session_Start();
    $result1=mysqli_query($con,"select projectID from $id"."project");
    while($p=mysqli_fetch_array($result1,MYSQLI_NUM))
    {
-    //echo $p[0];
-    $test_group=mysqli_query($con,"select memberID from $p[0]"."membermanage where(position = tester)");
+    $test_group=mysqli_query($con,"select memberID from $p[0]"."membermanage where position = 'tester' and memberID='$id' ");
     $flag=false; 
-    if(count($test_group)<=1)
+    if(count($test_group)<=0)
       continue; 
     while($t=mysqli_fetch_array($test_group,MYSQLI_NUM))
     {
@@ -157,16 +156,17 @@ Session_Start();
     }
     if($flag==true)
     {
-      $bug=mysqli_query($con,"select * from $p"."buginfo where(state=waitingExam)");
+      $bug=mysqli_query($con,"select * from $p[0]"."buginfo where state='waitingExam'");
 
       while($buglist=mysqli_fetch_array($bug,MYSQLI_NUM))
       {
 
-        echo "~~~~~~~~~~~~~~~~~~~";
-        echo $buglist[6];
-      
         echo "<li class=\"clearfix\">
-                  <div class=\"txt\"> "."$buglist[6] "." : "." $buglist[1] "." <span class=\"by label\">"."$buglist[4]"." </span> <span class=\"date badge badge-important\">"."$buglist[3]"."</span> </div><div class=\"pull-right\"> <a class=\"tip\" href=\"#\" title=\"Edit Task\"><i class=\"icon-pencil\"></i></a> <a class=\"tip\" href=\"#\" title=\"Delete\"><i class=\"icon-remove\"></i></a> </div></li>";  
+                  <div class=\"txt\"> "."$buglist[6] "." : "." $buglist[1] "." <span class=\"by label\">"."$buglist[4]"." </span> <span class=\"date badge badge-important\">"."$buglist[3]"."</span> </div><div class=\"pull-right\"> 
+                  <a class=\"tip\" href=\"insertAction/deleteBugAction.php?bugID=$buglist[0]&projectID=$p[0]\" title=\"拒绝添加\"><i class=\"icon-remove\"></i></a> 
+<a  href=\"#\" onclick=popBug(this) bugId=\"$buglist[0]\" projectID=\"$p[0]\" title=\"同意添加\"><i class=\"icon-plus\"></i></a> 
+                  
+                  </div></li>";  
       }
 
     }
@@ -190,5 +190,6 @@ Session_Start();
 <script src="js/jquery.ui.custom.js"></script> 
 <script src="js/bootstrap.min.js"></script> 
 <script src="js/matrix.js"></script>
+
 </body>
 </html>

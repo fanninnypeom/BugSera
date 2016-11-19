@@ -139,8 +139,15 @@ $userID=$_SESSION['ID'];
   <div id="content-header">
     <div id="breadcrumb"> <a href="index.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Bug</a> </div>
   
-    <h1>Bug</h1>
-    <?php
+
+<button class="btn btn-large btn-success" style="position: relative;
+  left: 730px;
+  top: 0px;"
+  onclick="popForm()"
+   >提交解决方案</button>
+
+
+   <?php
 
   $s="select * from $projectID"."buginfo where ID='$bugID'";
 
@@ -171,6 +178,9 @@ $creatorName=$row[1];
 
      ?>
 
+    <h1><?php 
+echo $Name;
+     ?></h1>
 
     </div>
      
@@ -222,16 +232,28 @@ $creatorName=$row[1];
 
           </div>
         </div>
-    <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-list"></i> 解决方案TA_1211</span>
+        <?php
+$re=mysqli_query($con,"select * from "."$projectID"."solutions where bugID='$bugID'");
+while($row=mysqli_fetch_array($re,MYSQLI_NUM)){
+  $re1=mysqli_query($con,"select * from users where ID='$row[3]'");
+$row1=mysqli_fetch_array($re1,MYSQLI_NUM);
+$state="";
+if($row[4]==1)
+  $state="通过";
+else
+  $state="审核中";
+  echo "
+    <div class=\"widget-box\">
+          <div class=\"widget-title\"> <span class=\"icon\"> <i class=\"icon-list\"></i> 解决方案"."$row[0]"."</span>
             <h5>解决者:</h5>
-            <span class="icon"><a href="">fanninnypeom</a></span>
-
-            <h5><span class="date badge badge-important">通过</span></h5>
+            <span class=\"icon\"><a href=\"\">"."$row1[1]"."</a></span>
+            <h5><span class=\"date badge badge-important\">"."$state"."</span></h5>
           </div> 
-          <div class="widget-content"> 
-          使用gcc5.0重新编译protobuf即可 </div>
-        </div>
+          <div class=\"widget-content\"> 
+         "."$row[1]"." </div>
+        </div>";
+}
+        ?>
 
   </div>
 </div>
@@ -240,10 +262,50 @@ $creatorName=$row[1];
   <div id="footer" class="span12"> 2016 &copy; WuNing &amp;LiuYing. Power by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 
+
+      <div  class="widget-box" id="solutionForm" style="display: none;position:absolute; top:70px; right:400px;width:600px; height:160px; " >
+<center>
+          <h3>解决方案详情</h3>
+
+          <textarea  class="span6" name="description" id="description" bugID="<?php echo $bugID; ?>" projectID="<?php echo $projectID; ?>" solverID="<?php echo $userID; ?>"></textarea>
+
+      <button class="btn btn-large btn-danger" onclick="addSolution()">提交</button>
+</center>
+
+      </div>     
+
+
 <!--end-Footer-part-->
 <script src="js/jquery.min.js"></script> 
 <script src="js/jquery.ui.custom.js"></script> 
 <script src="js/bootstrap.min.js"></script> 
 <script src="js/matrix.js"></script>
+<script type="text/javascript">
+
+function popForm(){
+  $("#solutionForm").css("display","");
+}
+
+function addSolution(){
+  var description=$("#description").val();
+  $("#solutionForm").css("display","none");
+  var bugID=$("#description").attr("bugID");
+  var projectID=$("#description").attr("projectID");
+  $.ajax({
+    url: 'insertAction/addSolutionAction.php',
+    method:'post',
+    data: {
+    projectID: projectID,
+    bugID: bugID,
+    description: description
+      }
+}) 
+location.reload(true);   
+
+}
+
+
+</script>
+
 </body>
 </html>

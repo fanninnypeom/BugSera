@@ -155,15 +155,17 @@ $createrName=$t1[1];
   <div id="content-header">
     <div id="breadcrumb"> <a href="index.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">project</a> </div>
     <h1>项目信息</h1>
-    <button class="btn btn-large btn-danger" style="position: relative;left: 430px;top: 0px;" onclick="popManager()"
+    <button class="btn btn-large btn-danger" style="position: relative;left: 250px;top: 0px;" onclick="popBug()"
+   >报告一个bug</button>
+    <button class="btn btn-large btn-danger" style="position: relative;left: 350px;top: 0px;" onclick="popManager()"
    >申请成为管理人员</button>
     <button class="btn btn-large btn-success" style="position: relative;
-  left: 530px;
+  left: 450px;
   top: 0px;"
   onclick="popDeveloper()"
    >申请成为开发人员</button>
     <button class="btn btn-large btn-primary" style="position: relative;
-  left: 630px;
+  left: 550px;
   top: 0px;"
   onclick="popTester()"
    >申请成为测试人员</button>
@@ -271,12 +273,65 @@ $createrName=$t1[1];
 
       </div>
 
+<div id="bugForm" class="widget-box" style="position:absolute; top:100px; right:600px;width:600px; height:160px;background:#DDD; display:none">
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>Bug-info</h5>
+        </div>
+        <div class="widget-content nopadding" style="background:#DDD">
+          <form class="form-horizontal" name=bugF>
+            <div class="control-group">
+              <label class="control-label" >名称 :</label>
+              <div class="controls">
+                <input type="text" class="span4" name="bugName" placeholder="First name" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" >Description</label>
+              <div class="controls">
+                <textarea class="span4" name="bugDescription"></textarea>
+              </div>
+            </div>
+          
+          </form>
+          <div style="background:#DDD">
+              <button onclick="submitBug()" class="btn btn-success">Save</button>
+            </div>
+        </div>
+      </div>
+      
+
+
 <!--end-Footer-part--> 
 <script src="js/jquery.min.js"></script> 
 <script src="js/jquery.ui.custom.js"></script> 
 <script src="js/bootstrap.min.js"></script> 
 <script src="js/matrix.js"></script>
 <script type="text/javascript">
+
+function popBug(){
+    $("#bugForm").css("display","");
+}
+
+function submitBug(){
+    $("#bugForm").css("display","none");
+    
+    var name=bugF.bugName.value;
+    var description=bugF.bugDescription.value; 
+    var projectID=$("#projectID").attr("value");
+    $.ajax({
+    url: 'insertAction/addBugAction.php',
+    method:'post',
+    data: {
+    group: 0,
+    priority: 0,
+    name: name,
+    description: description,
+    projectID: projectID,
+    type:1
+  }
+})
+       
+}
 
 //以下三个函数通过ajax调用addApplicationAction.php来将请求添加到数据库中
 function popManager(){

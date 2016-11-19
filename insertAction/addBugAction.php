@@ -47,6 +47,7 @@ $sql="INSERT INTO ".$projectID."buginfo (ID, description, state,createdTime,crea
 VALUES
 ('bug$count','$description','waitingExam','$time','$creatorID','$priority','$name','null')";
 	mysql_query($sql);
+  exit();
 }
 
 

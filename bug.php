@@ -30,15 +30,15 @@ $userID=$_SESSION['ID'];
     exit();//此人为测试者
   }
 
-  $s="select bugID from $projectID"."bugresponsibility where resID='$userID'";
+  $s="select bugID from $projectID"."bugresponsibility where resID='$userID' and bugID='$bugID'";
   $result = mysqli_query($con,$s);
   $t=mysqli_fetch_array($result,MYSQLI_NUM);
   if(count($t[0])!=0){
-    header("Location: http://127.0.0.1/bugForDeveloper.php?bugID="."$ID"."&projectID="."$projectID"); 
+    header("Location: http://127.0.0.1/bugForDeveloper.php?bugID="."$bugID"."&projectID="."$projectID"); 
     exit();//此人为领取Bug者
   }  
 
-//header("Location: http://127.0.0.1/bugForOther.php?bugID="."$ID"."&projectID="."$projectID"); 
-//    exit();
+header("Location: http://127.0.0.1/bugForOther.php?bugID="."$bugID"."&projectID="."$projectID"); 
+    exit();
 
 ?>

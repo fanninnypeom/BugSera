@@ -78,7 +78,8 @@ $sql = "CREATE TABLE project"."$rowCount"."Solutions
 ID varchar(20),
 content varchar(1000),
 bugID varchar(20),
-solverID varchar(20)
+solverID varchar(20),
+accept int(1)
 )";
 mysql_query($sql,$con);
 
