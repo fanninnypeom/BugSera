@@ -1,3 +1,4 @@
+
 <?php
 Session_Start(); 
 ?>
@@ -132,27 +133,37 @@ Session_Start();
           <div class="widget-content">
             <div class="todo">
               <ul>
-                <li class="clearfix">
-                  <div class="txt"> Luanch This theme on Themeforest <span class="by label">Nirav</span> <span class="date badge badge-important">Today</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> Manage Pending Orders <span class="by label">Alex</span> <span class="date badge badge-warning">Today</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> MAke your desk clean <span class="by label">Admin</span> <span class="date badge badge-success">Tomorrow</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> Today we celebrate the great looking theme <span class="by label">Admin</span> <span class="date badge badge-info">08.03.2013</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> Manage all the orders <span class="by label">Mark</span> <span class="date badge badge-info">12.03.2013</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-           style="display:none"      </li>
-              </ul style="display:none">
+              <?php
+   $con = mysqli_connect("localhost","root","");
+  if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+  mysqli_select_db($con,"BugFade");
+  $id=$_SESSION["ID"];
+  $s="select projectID from "."$id"."project";
+  $result = mysqli_query($con,$s);
+
+    while($row = mysqli_fetch_array($result,MYSQLI_NUM)){
+        $s1="select * from "."$row[0]"."buginfo where creatorID='$id'";
+      
+        $result1 = mysqli_query($con,$s1);
+        while($rr= mysqli_fetch_array($result1,MYSQLI_NUM)){
+        echo "<li class=\"clearfix\">
+                  <div class=\"txt\"> ".$rr[6]."  ".$rr[1]." <span class=\"date badge badge-important\">".$rr[3]."</span> </div>
+                  <div class=\"pull-right\"> <a class=\"tip\" href=\"bug.php?bugID=".$rr[0]."&projectID=".$row[0]."\" title=\"Edit\"><i class=\"icon-pencil\"></i></a> <a class=\"tip\" href=\"#\" title=\"".$rr[2]."\"><i class=\"icon-remove\"></i></a> </div>
+                </li>";
+         }
+        }
+        
+    
+ 
+
+
+              ?>
+                
+                
+              </ul >
             </div>
           </div>
         </div>
@@ -160,15 +171,15 @@ Session_Start();
     
   </div>
 </div>
-<!--Footer style="display:none"- style="display:none"part-->
-<div class= style= style="display:none""display:none""row-fluid">
-  <div  style="display:none"id="footer" class="span12"> 2016 &copy; WuNing &amp;LiuYing. Pow style="display:none"er by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
+<!--Footer - part-->
+<div class="row-fluid">
+  <div  id="footer" class="span12"> 2016 &copy; WuNing &amp;LiuYing. Power by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 
-<!--end-Fo style="display:none"ot style="display:none"er-part-->
+<!--end-Foot er-part-->
 <script src="js/jquery.min.js"></script> 
-<script src style="display:none"="js/jquery.ui.custom.js"></script> 
-<script src style="display:none"="js/bootstrap.min.js"></script> 
-<script style="display:none" src="js/matrix. style="display:none"js"></scr style="display:none"ipt>
+<script src="js/jquery.ui.custom.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script  src="js/matrix.js"></script>
 </body>
 </html>

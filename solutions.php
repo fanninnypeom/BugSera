@@ -140,22 +140,22 @@ Session_Start();
         </div>
       </div>
     </div>
-  <div  style="display:none"class="row-fluid style="display:none"">  
-     style="display:none"  <div class="span12">
+  <div  class="row-fluid ">  
+       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-list"></i> </span>
             <h5><a href="project.php">TA_1211</a></h5>
             <span class="icon"></span>
-            <span class="icon"> 来 style="disp style="display:none"lay: style="display:none"none"源Bug </span>
-            <h5><a href="bug.p style="display:none"hp style="display:none"">can't run demo.py</a></h5>
-            <h5><span class="date style="display:none" badge badge-important">通过</span></h5>
-          </d style="display:none"iv> 
+            <span class="icon"> 来 源Bug </span>
+            <h5><a href="bug.php ">can't run demo.py</a></h5>
+            <h5><span class="date  badge badge-important">通过</span></h5>
+          </div> 
           <div class="widget-content"> 
-          使用gcc5.0重新编译pr style="display style="display:none":none"otobuf即可 </div>
-       style="display:none"  </div>
-    style="display:none"   </div>
+          使用gcc5.0重新编译protobuf即可 </div>
+         </div>
+       </div>
 
-    style="display:none" </div>
+     </div>
     
   </div>
 </di style="display:none"v>
@@ -166,8 +166,8 @@ Session_Start();
 
 <!--end-Footer-part-->
 <script src="js/jquery.min.js"></script> 
-<script src="js/jquery.u style="display:none"i.custom.js"></script> 
+<script src="js/jquery.ui.custom.js"></script> 
 <script src="js/bootstrap.min.js"></script> 
-<script src="js/matrix.js"></scr style="display:none"ipt>
+<script src="js/matrix.js"></script>
 </body>
 </html>

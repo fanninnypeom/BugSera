@@ -1,4 +1,5 @@
 
+
 <?php
 //游客进入工程后显示的页面
 
@@ -134,14 +135,14 @@ $createrName=$t1[1];
     </li>
     <li><a href="solutions.php"><i class="icon icon-tint"></i> <span>解决方案</span></a></li>
 
-    <li class="content" style="display:none"> <span>Monthly Bandwidth Transfer</span>
+    <li class="content" > <span>Monthly Bandwidth Transfer</span>
       <div class="progress progress-mini progress-danger active progress-striped">
         <div style="width: 77%;" class="bar"></div>
       </div>
       <span class="percent">77%</span>
       <div class="stat">21419.94 / 14000 MB</div>
     </li>
-    <li class="content" style="display:none"> <span>Disk Space Usage</span>
+    <li class="content" > <span>Disk Space Usage</span>
       <div class="progress progress-mini active progress-striped">
         <div style="width: 87%;" class="bar"></div>
       </div>
@@ -210,8 +211,8 @@ $createrName=$t1[1];
                         ?>
                       </strong></td>
                     </tr>
-                 style="display:none"    <tr>
-                style="display:none"       <td>创建人:</td>
+                     <tr>
+                       <td>创建人:</td>
                       <td><strong>
                         <?php 
                         echo $createrName;
@@ -219,22 +220,22 @@ $createrName=$t1[1];
                       </strong></td>
                     </tr>
                   </tr>
-                 style="display:none"    < style="display:none"/tbody>
-                style="display:none"   style="display:none" 
-        style="display:none"         </table>
-              </div style="display:none">
+                     < /tbody>
+                    
+                 </table>
+              </div >
             </div>
         
- style="display:none"          </div>
+           </div>
         </div>
-   style="display:none"  style="display:none"  style="display:none"  </div>
- style="display:none"    </div>
+         </div>
+     </div>
 
 
     <hr>
     
 <!--Footer-part-->
- style="display:none"<div class="row-fluid">
+ <div class="row-fluid">
   <div id="footer" class="span12"> 2016 &copy; WuNing &amp;LiuYing. Power by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 
@@ -243,12 +244,12 @@ $createrName=$t1[1];
           <h3>备注信息</h3>
           <textarea style="width:350px;" class="span11" name="description" id="description1"></textarea>
 
- style="display:none"		<button class="btn btn-large btn-danger" onclick="askManager()">申请</button>
+ 		<button class="btn btn-large btn-danger" onclick="askManager()">申请</button>
 </center>
 
       </div>
 
-<div  class="widget-box" id="tip2" style="display:none ;position:absolute; top:100px; right:600px;width:600px; heigh style="display:none"t:160px; " >
+<div  class="widget-box" id="tip2" style="display:none ;position:absolute; top:100px; right:600px;width:600px; heigh t:160px; " >
 <center>
           <h3>备注信息</h3>
 

@@ -16,6 +16,7 @@ $result = mysql_query("select * from total where name='users'") or die(mysql_err
 $rowCount=$row['length'];
 $rowCount=$rowCount+1;
 //echo $rowCount;
+
 //$sql;
 if($rowCount==1	){
 	$sql="INSERT INTO total (name, length)

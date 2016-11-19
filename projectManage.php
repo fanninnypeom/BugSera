@@ -148,7 +148,7 @@ exit();
   $s="select projectID from "."$id"."project";
   $result = mysqli_query($con,$s);
     while($row = mysqli_fetch_array($result,MYSQLI_NUM)){
-        $s1="select memberID from $row[0]"."membermanage where position='manager'";
+        $s1="select memberID from $row[0]"."membermanage where position='manager' and memberID='$id'";
         $result1 = mysqli_query($con,$s1);
         if(count(mysqli_fetch_array($result1,MYSQLI_NUM)[0])){
         $s2="select * from projects where ID='$row[0]'";

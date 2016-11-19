@@ -134,14 +134,14 @@ $createrName=$t1[1];
     </li>
     <li><a href="solutions.php"><i class="icon icon-tint"></i> <span>解决方案</span></a></li>
 
-    <li class="content" style="display:none"> <span>Monthly Bandwidth Transfer</span>
+    <li class="content"> <span>Monthly Bandwidth Transfer</span>
       <div class="progress progress-mini progress-danger active progress-striped">
         <div style="width: 77%;" class="bar"></div>
       </div>
       <span class="percent">77%</span>
       <div class="stat">21419.94 / 14000 MB</div>
     </li>
-    <li class="content" style="display:none"> <span>Disk Space Usage</span>
+    <li class="content"> <span>Disk Space Usage</span>
       <div class="progress progress-mini active progress-striped">
         <div style="width: 87%;" class="bar"></div>
       </div>
@@ -154,13 +154,20 @@ $createrName=$t1[1];
   <div id="content-header">
     <div id="breadcrumb"> <a href="index.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">project</a> </div>
     <h1>项目信息</h1>
+    <button class="btn btn-large btn-success" style="position: relative;
+  left: 730px;
+  top: 0px;"
+  onclick="popBug()"
+   >提交Bug</button>
   </div>
   <div class="container-fluid"><hr>
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
-            <h5 ><?php 
+            <h5 id="projectID" value="<?php 
+            echo $ID;
+            ?>"  ><?php 
             echo $name;
             ?></h5>
           </div>
@@ -207,49 +214,60 @@ $createrName=$t1[1];
                     </tbody>
                   
                 </table>
-       style="display:none"        </div>
- style="display:none"            </div>
+              </div>
+            </div>
         
           </div>
         </div>
       </div>
- style="display:none"    </div>
+    </div>
 
 
     <hr>
- style="display:none" style="display:none"    <div class="row-fluid" style="display:none">
-      style="display:none" <div class="span6">
-        <div  style="display:none"class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-f style="display:none"ile"></i> </span>
-            <h5>Recent Posts</h5>
+    <div class="row-fluid">
+      <div class="span6">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-file"></i> </span>
+            <h5>Bug Lists</h5>
           </div>
           <div class="widget-content nopadding">
- style="display:none"            <ul class="re style="display:none"cent-posts">
-              <li>
-      style="display:none"           <div class="user-thumb"> <img width="40" heig style="display:none"ht="40" alt="User" src="img/demo/av1.jpg"> </div>
-                <div class="article-post">
-                  <div  style="display:none"class="fr"><a href="#" class="btn btn-primary btn-mini">Edit</a> <a href="#" class="btn btn-success btn-mini">Publish</a> <a href="#" class="btn btn-danger btn-mini">Delete</a></div>
-                  <span class="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
-                  <p><a href="#">This is a much longer one that will go on for a few lines.It has multiple paragraphs and is full of waffle to pad out the comment.</a> </p>
+            <ul class="recent-posts">
+              
+              <?php 
+              $sql="select * from ".$ID."buginfo";
+    $result = mysqli_query($con,$sql);//得到已有用户的数量
+  while($row = mysqli_fetch_array($result,MYSQLI_NUM)){
+              $r = mysqli_query($con,"select * from users where ID='$row[4]'");
+              $rr=mysqli_fetch_array($r,MYSQLI_NUM);
+              $pri="";
+              if($row[5]==1){
+                $pri="一般";
+              }
+              else if($row[5]==2){
+                $pri="重要";
+              }
+              else if($row[5]==3){
+                $pri="紧急";
+              }
+              else{
+                $pri="非常紧急";
+              }
+              $r1 = mysqli_query($con,"select * from ".$ID."buggroup where bugID='$row[0]'");
+              $rr1=mysqli_fetch_array($r1,MYSQLI_NUM);
+
+              echo "<li>
+                <div class=\"user-thumb\"> <img width=\"40\" height=\"40\" alt=\"User\" src=\"img/demo/av1.jpg\"> </div>
+                <div class=\"article-post\">
+                  <div class=\"fr\">
+<a href=\"#\" class=\"btn btn-primary btn-mini\">".$rr1[1]."</a>                  
+<a href=\"#\" class=\"btn btn-danger btn-mini\">".$pri."</a>
+<a href=\"#\" class=\"btn btn-success btn-mini\">".$row[2]."</a></div>
+                  <span class=\"user-info\"> ".$row[6]."  By: ".$rr[1]." / Date: ".$row[3]."  </span>
+                  <p><a href=\"bug.php?bugID=".$row[0]."&projectID=".$ID."\">".$row[1]."</a> </p>
                 </div>
-              </li>
-              <li>
-                <div class="user-thumb"> <img width="40" height="40" alt="User" src="img/demo/av2.jpg"> </div style="display:none">
-                <div class="article-post">
-                  <div class="fr"><a href="#" class="btn btn-primary btn-mini">Edit</a> <a href="#" class="btn btn-success btn-mini">Publish</a> <a href="#" class="btn btn-danger btn-mini">Delete</a></div>
-                  <span class="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
-                style="display:none"   <p><a href="#">This is a much longer one that will go on for a few lines.It has multiple paragraphs and is full of waffle to pad out the comment.</a> </p>
-                </div>
-              </li>
-              <li>
-                <div class="user-thumb"> <img width="40" height="40" alt="User" src="img/demo/av3.jpg"> </div>
-                <div class="article-post">
-                  <div class="fr"><a href="#" class="btn btn-primary btn-mini">Edit</a> <a href="#" class="btn btn-success btn-mini">Publish</a> <a href="#" class="btn btn-danger btn-mini">Delete</a></div>
-                  <span class="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
-                  <p><a href="#">This is a much longer one that will go on for a few lines.Itaffle to pad out the comment.</a> </p>
-                </div>
-              <li>
-                <button class="btn btn-warning btn-mini">View All</button>
+              </li>";
+            }
+              ?>
               </li>
             </ul>
           </div>
@@ -304,11 +322,11 @@ $createrName=$t1[1];
                   <th>邮箱</th>
                   <th>组别</th>
                   <th>声望</th>
-                  <th>操作</th>
                 </tr>
               </thead>
               <tbody>
               <?php 
+                
                 $s2="select * from $ID"."membermanage"." where position='developer'";
                 $result2 = mysqli_query($con,$s2);
 
@@ -318,16 +336,20 @@ $createrName=$t1[1];
                     $t3=mysqli_fetch_array($result3,MYSQLI_NUM);
                     $Name=$t3[1];
                     $Email=$t3[3];
-                    $Reputation=$t3[4];
-
-                    $s4="select * from $ID"."MemberGroup"." where name='$Name'";
+                    $Reputation=$t2[2];
+                    $s4="select * from $ID"."MemberGroup"." where name='$t2[0]'";
+                    $Position;
                     $result4 = mysqli_query($con,$s4);
+                    $t4=mysqli_fetch_array($result4,MYSQLI_NUM);
+                    /*
                     while($t4=mysqli_fetch_array($result4,MYSQLI_NUM)){
                       $s5="select * from $ID"."group"." where groupID='$t4[0]'";
                       $result5 = mysqli_query($con,$s5);
                       $t5=mysqli_fetch_array($result5,MYSQLI_NUM);
                       $Position=$Position.",".$t5[1];
                     }
+                    */
+                    $Position=$t4[0];
                     echo '<tr>
                   <td class="taskDesc"> '."$Name".'</td>
                   <td class="taskStatus"><span class="in-progress">'."$Email".'</span></td>
@@ -354,7 +376,6 @@ $createrName=$t1[1];
                   <th>邮箱</th>
                   <th>组别</th>
                   <th>声望</th>
-                 <th>操作</th>
                 
                 </tr>
               </thead>
@@ -369,16 +390,20 @@ $createrName=$t1[1];
                     $t3=mysqli_fetch_array($result3,MYSQLI_NUM);
                     $Name=$t3[1];
                     $Email=$t3[3];
-                    $Reputation=$t3[4];
-
-                    $s4="select * from $ID"."MemberGroup"." where name='$Name'";
+                    $Reputation=$t2[2];
+                    $s4="select * from $ID"."MemberGroup"." where name='$t2[0]'";
+                    $Position;
                     $result4 = mysqli_query($con,$s4);
+                    $t4=mysqli_fetch_array($result4,MYSQLI_NUM);
+                    /*
                     while($t4=mysqli_fetch_array($result4,MYSQLI_NUM)){
                       $s5="select * from $ID"."group"." where groupID='$t4[0]'";
                       $result5 = mysqli_query($con,$s5);
                       $t5=mysqli_fetch_array($result5,MYSQLI_NUM);
                       $Position=$Position.",".$t5[1];
                     }
+                    */
+                    $Position=$t4[0];
                     echo '<tr>
                   <td class="taskDesc"> '."$Name".'</td>
                   <td class="taskStatus"><span class="in-progress">'."$Email".'</span></td>
@@ -401,10 +426,91 @@ $createrName=$t1[1];
   <div id="footer" class="span12"> 2016 &copy; WuNing &amp;LiuYing. Power by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 
+<div id="bugForm" class="widget-box" style="position:absolute; top:100px; right:600px;width:600px; height:160px;background:#DDD; display:none">
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>Bug-info</h5>
+        </div>
+        <div class="widget-content nopadding" style="background:#DDD">
+          <form class="form-horizontal" name=bugF>
+            <div class="control-group">
+              <label class="control-label" >名称 :</label>
+              <div class="controls">
+                <input type="text" class="span4" name="bugName" placeholder="First name" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" >Description</label>
+              <div class="controls">
+                <textarea class="span4" name="bugDescription"></textarea>
+              </div>
+            </div>
+            <center>
+            <select id="groupSelect" class="form-control" style="
+          width:100px;
+background-color: #eee;
+
+">
+<?php 
+$s2="select * from $ID"."group";
+$result2 = mysqli_query($con,$s2);
+while($t2=mysqli_fetch_array($result2,MYSQLI_NUM)){
+      echo "<option value=\"$t2[1]\">"."$t2[1]"."</option>";
+                }  
+?>
+</select>
+            <select id="prioritySelect" class="form-control" style="
+          width:100px;background-color: #eee;
+">
+<option value="1">一般</option>
+<option value="2">重要</option>
+<option value="3">紧急</option>
+<option value="4">非常紧急</option>
+</select>
+</center>
+            
+          </form>
+          <div style="background:#DDD">
+              <button onclick="submitBug()" class="btn btn-success">Save</button>
+            </div>
+        </div>
+      </div>
+      
+
+
 <!--end-Footer-part--> 
 <script src="js/jquery.min.js"></script> 
 <script src="js/jquery.ui.custom.js"></script> 
 <script src="js/bootstrap.min.js"></script> 
 <script src="js/matrix.js"></script>
+<script type="text/javascript">
+function popBug(){
+    $("#bugForm").css("display","");
+}
+function submitBug(){
+    $("#bugForm").css("display","none");
+    var group=document.getElementById("groupSelect").value;
+    var priority=document.getElementById("prioritySelect").value;
+    var name=bugF.bugName.value;
+    var description=bugF.bugDescription.value; 
+    var projectID=$("#projectID").attr("value");
+    var type=0;
+    $.ajax({
+    url: 'insertAction/addBugAction.php',
+    method:'post',
+    data: {
+    group: group,
+    priority: priority,
+    name: name,
+    description: description,
+    projectID: projectID,
+    type:type
+  }
+})
+       
+}
+
+
+
+</script>
 </body>
 </html>

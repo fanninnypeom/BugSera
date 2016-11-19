@@ -57,7 +57,9 @@ description varchar(15),
 state varchar(15),
 createdTime date,
 creatorID varchar(20),
-priority int
+priority int,
+name varchar(20),
+solverID varchar(20)
 )";
 mysql_query($sql,$con);
 

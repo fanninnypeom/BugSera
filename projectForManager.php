@@ -137,14 +137,14 @@ $createrName=$t1[1];
     </li>
     <li><a href="solutions.php"><i class="icon icon-tint"></i> <span>解决方案</span></a></li>
 
-    <li class="content" style="display:none"> <span>Monthly Bandwidth Transfer</span>
+    <li class="content"> <span>Monthly Bandwidth Transfer</span>
       <div class="progress progress-mini progress-danger active progress-striped">
         <div style="width: 77%;" class="bar"></div>
       </div>
       <span class="percent">77%</span>
       <div class="stat">21419.94 / 14000 MB</div>
     </li>
-    <li class="content" style="display:none"> <span>Disk Space Usage</span>
+    <li class="content"> <span>Disk Space Usage</span>
       <div class="progress progress-mini active progress-striped">
         <div style="width: 87%;" class="bar"></div>
       </div>
@@ -191,8 +191,8 @@ $createrName=$t1[1];
                         <?php 
                         echo $ID;
                         ?>
-                    style="display:none"   </strong></td>
-                  style="display:none"   </tr>
+                      </strong></td>
+                    </tr>
                     <tr>
                       <td>创建日期:</td>
                       <td><strong>
@@ -200,20 +200,20 @@ $createrName=$t1[1];
                         echo $createdTime;
                         ?>
                       </strong></td>
-                    style="display:none"  style="display:none"</tr>
-    style="display:none"                 <tr>
-        style="display:none"               <td>创建人:</td>
+                    </tr>
+                    <tr>
+                      <td>创建人:</td>
                       <td><strong>
-           style="display:none"              <?php 
-                        echo $ style="display:none"createrName;
+                        <?php 
+                        echo $createrName;
                         ?>
                       </strong></td>
                     </tr>
-   style="display:none"                </tr>
-                    </tbod style="display:none"y>
+                  </tr>
+                    </tbody>
                   
-                </table> style="display:none"
-              </di style="display:none"v>
+                </table>
+              </div>
             </div>
         
           </div>
@@ -230,7 +230,7 @@ $result=mysqli_query($con,$s);
 ?>
     <div class="row-fluid">
       <div class="span6">
-        <d style="display:none"iv class="widget-box">
+        <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-file"></i> </span>
             <h5>Recent Posts</h5>
           </div>
@@ -238,7 +238,7 @@ $result=mysqli_query($con,$s);
             <ul class="recent-posts">
             <?php 
             	$p;
-				wh style="display:none"ile($t=mysqli_fetch_array($result,MYSQLI_NUM)){
+				while($t=mysqli_fetch_array($result,MYSQLI_NUM)){
 					if($t[1]=="manager"){
 						$p=1;
 					}

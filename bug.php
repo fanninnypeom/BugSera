@@ -1,5 +1,58 @@
 <?php
 Session_Start(); 
+if(!$_SESSION["login"]){
+header("Location: http://127.0.0.1/error404.php");//
+exit();  
+}
+
+$con = mysqli_connect("localhost","root","");
+  if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+  mysqli_select_db($con,"BugFade");
+
+$bugID=$_GET['bugID'];
+$projectID=$_GET['projectID'];
+
+
+
+//根据type的不同跳转到不同的php页面，以实现对不同的角色显示不同的页面
+if($type==0){
+  $s="select position from $ID"."membermanage where ID="."'$uID'";
+  $result = mysqli_query($con,$s);
+  $t=mysqli_fetch_array($result,MYSQLI_NUM);
+  if(count($t[0])==0){
+    $type=4; //在项目人员管理表中找不到这个人，那么这个人就是游客
+  }
+  else if($t[0]=="manager"){
+    $type=1;
+  }
+  else if($t[0]=="tester"){
+    $type=3; 
+  }
+  else if($t[0]=="developer"){
+    $type=2; 
+  }
+}
+
+if($type==1){
+  header("Location: http://127.0.0.1/projectForManager.php"."?ID="."$ID");
+  exit();  
+}
+else if($type==2){
+  header("Location: http://127.0.0.1/projectForDeveloper.php"."?ID="."$ID");
+  exit();  
+}
+else if($type==3){
+  header("Location: http://127.0.0.1/projectForTester.php"."?ID="."$ID");
+  exit();  
+}
+else if($type==4){
+  header("Location: http://127.0.0.1/projectForTourist.php"."?ID="."$ID");
+  exit();  
+}
+
 ?>
 
 <!DOCTYPE html>

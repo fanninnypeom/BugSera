@@ -135,14 +135,14 @@ $createrName=$t1[1];
     </li>
     <li><a href="solutions.php"><i class="icon icon-tint"></i> <span>解决方案</span></a></li>
 
-    <li class="content" style="display:none"> <span>Monthly Bandwidth Transfer</span>
+    <li class="content" style="dispaly:none"> <span>Monthly Bandwidth Transfer</span>
       <div class="progress progress-mini progress-danger active progress-striped">
         <div style="width: 77%;" class="bar"></div>
       </div>
       <span class="percent">77%</span>
       <div class="stat">21419.94 / 14000 MB</div>
     </li>
-    <li class="content" style="display:none"> <span>Disk Space Usage</span>
+    <li class="content" style="dispaly:none"> <span>Disk Space Usage</span>
       <div class="progress progress-mini active progress-striped">
         <div style="width: 87%;" class="bar"></div>
       </div>
@@ -218,31 +218,31 @@ $createrName=$t1[1];
 
 
     <hr>
-     style="display:none"<d style="display:none"iv class= style="display:none""row-fluid">
+    <div class="row-fluid">
       <div class="span6">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-file"></i> </span>
             <h5>Recent Posts</h5>
           </div>
-          <div  style="display:none"class="widget-content style= style="display:none""display:none" nopadding"> style="display:none"
-            <ul class="re style="display:none"cent-posts">
+          <div class="widget-content nopadding">
+            <ul class="recent-posts">
               <li>
-     style="display:none"            <div class="user-thumb"> <img width="40" height="40" alt="User" src="img/demo/av1.jpg"> </div>
-                <div class=" style="display:none"article-post">
-                  <div class="fr"><a href="#" class="btn  style="display:none"btn-primary btn-mini">Edit</a>  style="display:none"<a href="#" class="btn btn-success btn-mini">Publi style="display:none"sh</a> <a href="#" class="btn btn-danger btn-mini">Delete</a></div> style="display:none"
+                <div class="user-thumb"> <img width="40" height="40" alt="User" src="img/demo/av1.jpg"> </div>
+                <div class="article-post">
+                  <div class="fr"><a href="#" class="btn btn-primary btn-mini">Edit</a> <a href="#" class="btn btn-success btn-mini">Publish</a> <a href="#" class="btn btn-danger btn-mini">Delete</a></div>
                   <span class="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
-                  <p><a href="#">This is a much longer one that will go on style="display:none" for a few lines.It has multiple paragraphs and is full of waffle to pad out the comment.</a> </p>
+                  <p><a href="#">This is a much longer one that will go on for a few lines.It has multiple paragraphs and is full of waffle to pad out the comment.</a> </p>
                 </div>
               </li>
               <li>
                 <div class="user-thumb"> <img width="40" height="40" alt="User" src="img/demo/av2.jpg"> </div>
                 <div class="article-post">
                   <div class="fr"><a href="#" class="btn btn-primary btn-mini">Edit</a> <a href="#" class="btn btn-success btn-mini">Publish</a> <a href="#" class="btn btn-danger btn-mini">Delete</a></div>
-                 style="display:none"  <span class="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
+                  <span class="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
                   <p><a href="#">This is a much longer one that will go on for a few lines.It has multiple paragraphs and is full of waffle to pad out the comment.</a> </p>
                 </div>
               </li>
-              <l style="display:none"i>
+              <li>
                 <div class="user-thumb"> <img width="40" height="40" alt="User" src="img/demo/av3.jpg"> </div>
                 <div class="article-post">
                   <div class="fr"><a href="#" class="btn btn-primary btn-mini">Edit</a> <a href="#" class="btn btn-success btn-mini">Publish</a> <a href="#" class="btn btn-danger btn-mini">Delete</a></div>
