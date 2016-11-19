@@ -124,8 +124,9 @@ exit();
 
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="index.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">维护的项目</a> </div>
-    <h1>维护的项目 </h>
+    <div id="breadcrumb"> <a href="index.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">管理的项目</a> </div>
+
+    <h1>测试的项目 </h1>
     
   </div>
   <div class="container-fluid">
@@ -142,9 +143,10 @@ exit();
   $s="select projectID from "."$id"."project";
   $result = mysqli_query($con,$s);
     while($row = mysqli_fetch_array($result,MYSQLI_NUM)){
-        $s1="select memberID from $row[0]"."membermanage where position='developer'";
+        $s1="select memberID from $row[0]"."membermanage where position='developer' and memberID='$id'";
         $result1 = mysqli_query($con,$s1);
-        if(count(mysqli_fetch_array($result1,MYSQLI_NUM)[0])){
+        $zz=mysqli_fetch_array($result1,MYSQLI_NUM);
+        if(count($zz)){
         $s2="select * from projects where ID='$row[0]'";
         $result2 = mysqli_query($con,$s2);
         $t=mysqli_fetch_array($result2,MYSQLI_NUM);
@@ -155,7 +157,7 @@ exit();
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-list"></i> </span>
-            <h5><a href="project.php?ID='."$projectID".'&type=2">';//type=0代表进入者身份未确定type=1代表管理员进入，type=2代表开发人员进入
+            <h5><a href="project.php?ID='."$projectID".'&type=3">';//type=0代表进入者身份未确定type=1代表管理员进入，type=2代表开发人员进入
       //type=3代表测试员进入，type=4代表游客进入 
       echo $name;
       echo '</a></h5>
