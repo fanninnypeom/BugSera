@@ -167,6 +167,7 @@ $con = mysqli_connect("localhost","root","");
 
 
                       if($row4[1]==$row5[0])
+
                       echo "<li class=\"clearfix\">
                   <div class=\"txt\"> <a href=\"bug.php\" > 
                   ".$row2[6]."   ".$row2[1]."

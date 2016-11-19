@@ -157,6 +157,13 @@ $createrName=$t1[1];
   <div id="content-header">
     <div id="breadcrumb"> <a href="index.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">project</a> </div>
     <h1>项目信息</h1>
+<button class="btn btn-large btn-danger" style="position: relative;
+  left: 830px;
+  top: 10px;"
+  onclick="deleteProject()"> 
+ 删除项目
+</button>
+
   </div>
   <div class="container-fluid"><hr>
     <div class="row-fluid">
@@ -498,7 +505,7 @@ $result=mysqli_query($con,$s);
 </div>
 
 <!--end-Footer-part--> 
-<div  class="widget-box" id="applyForm" style="display:none ;position:absolute; top:100px; right:600px;width:600px; height:160px; " >
+<div  class="widget-box" id="applyForm" style="display:none ;position:absolute; top:100px; right:400px;width:600px; height:160px; " >
         <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
           <h5>选择分组</h5>
         </div>
@@ -536,7 +543,7 @@ while($t2=mysqli_fetch_array($result2,MYSQLI_NUM)){
 
 
 
-<div  class="widget-box" id="modifyForm" style="display:none ;position:absolute; top:100px; right:600px;width:600px; height:160px; " >
+<div  class="widget-box" id="modifyForm" style="display:none ;position:absolute; top:100px; right:400px;width:600px; height:160px; " >
         <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
           <h5>修改分组</h5>
         </div>
@@ -571,7 +578,7 @@ while($t2=mysqli_fetch_array($result2,MYSQLI_NUM)){
       </div>
 
 
-      <div  class="widget-box" id="groupForm" style="display:none ;position:absolute; top:100px; right:600px;width:600px; height:160px; " >
+      <div  class="widget-box" id="groupForm" style="display:none ;position:absolute; top:100px; right:400px;width:600px; height:160px; " >
 <center>
           <h3>新增分组名字</h3>
 
@@ -580,11 +587,7 @@ while($t2=mysqli_fetch_array($result2,MYSQLI_NUM)){
       <button class="btn btn-large btn-danger" onclick="addGroup()">添加</button>
 </center>
 
-      </div>
-
-
-
-                 
+      </div>     
 
 <script src="js/jquery.min.js"></script> 
 <script src="js/jquery.ui.custom.js"></script> 
@@ -634,8 +637,29 @@ function addGroup(){
   location.reload(true); 
 
 }
-
-
+function deleteProject()
+{
+  var projectID=$("#projectID").attr("value");
+  var groupName=$("#groupName").val();
+  console.log(projectID);
+  console.log(groupName);
+  var ifdelete=confirm("确定要删除该项目吗");
+//   console.log(ifdelete);
+  if(ifdelete)
+  {
+//    console.log(ifdelete);
+/*    $.ajax({
+      url: 'insertAction/deleteProject.php',
+      method:'post',
+        data: {
+        projectID: projectID
+      }
+    })
+  */
+     window.location.href="insertAction/deleteProject.php?projectID="+projectID;
+    console.log("delete success");
+  }
+}
 function submit(){
   $("#applyForm").css("display","none");
   var userID=$("#applyForm").attr("userID");
@@ -724,6 +748,7 @@ location.reload(true);
 
 function deleteGroup(t){
   var projectID=$("#projectID").attr("value");
+  console.log(projectID);
   var groupID=t.id;
   $.ajax({
     url: 'insertAction/deleteGroupAction.php',

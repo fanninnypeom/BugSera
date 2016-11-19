@@ -186,7 +186,7 @@ exit();
   <div id="footer" class="span12"> 2016 &copy; WuNing &amp;LiuYing. Power by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 
-<div  class="widget-box" id="projectForm" style="display:none ;position:absolute; top:100px; right:600px;width:600px; height:260px; " >
+<div  class="widget-box" id="projectForm" style="display:none ;position:absolute; top:100px; right:400px;width:600px; height:260px; " >
         <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
           <h5>新建项目</h5>
         </div>
@@ -206,11 +206,12 @@ exit();
             </div>
             <div class="control-group">
               <label class="control-label">项目描述</label>
-              <div class= "controls"> <textarea style="width:350px;" class="span11" name="description"  id="description"></textarea>
+
+              <div class="controls"> <textarea style="width:350px;" class="span11" name="description" id="description"></textarea>
               </div>
             </div>
              <div class="form-actions">
-              <button onclick="submit()" type="submit" class="btn btn-success"  >创建</button>
+              <button onclick="submit()" type="submit" class="btn btn-success" >创建</button>
             </div>
            </form>
         </div>
