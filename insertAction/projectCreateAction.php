@@ -133,7 +133,7 @@ $sql = "CREATE TABLE project"."$rowCount"."BugResponsibility
 (
 bugID varchar(20),
 resID varchar(20),
-getTime int
+getTime date
 )";
 mysql_query($sql,$con);//项目Bug负责表
 

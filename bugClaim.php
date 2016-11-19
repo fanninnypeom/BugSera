@@ -1,5 +1,12 @@
 <?php
 Session_Start(); 
+$con = mysqli_connect("localhost","root","");
+  if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+  mysqli_select_db($con,"BugFade");
+
 ?>
 
 <!DOCTYPE html>
@@ -132,26 +139,47 @@ Session_Start();
           <div class="widget-content">
             <div class="todo">
               <ul>
-                <li class="clearfix">
-                  <div class="txt"> <a href="bug.php" > Luanch This theme on Themeforest </a><span class="by label">Nirav</span> <span class="date badge badge-important">Today</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> <a href="bug.php" >Manage Pending Orders </a><span class="by label">Alex</span> <span class="date badge badge-warning">Today</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> <a href="bug.php" >MAke your desk clean </a> <span class="by label">Admin</span> <span class="date badge badge-success">Tomorrow</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"><a href="bug.php" > Today we celebrate the great looking theme </a> <span class="by label">Admin</span> <span class="date badge badge-info">08.03.2013</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"><a href="bug.php" > Manage all the orders </a><span class="by label">Mark</span> <span class="date badge badge-info">12.03.2013</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
+                 <?php     
+                 $usrID=$_SESSION["ID"];
+              $sql="select * from ".$usrID."project";
+              $result = mysqli_query($con,$sql);
+              while($row = mysqli_fetch_array($result,MYSQLI_NUM)){
+              $sql1="select * from ".$row[1]."membermanage where memberID='$usrID'";
+              $result1 = mysqli_query($con,$sql1);
+              $row1 = mysqli_fetch_array($result1,MYSQLI_NUM);
+              if($row1[1]=="developer"){
+                   $sql2="select * from ".$row[1]."buginfo";
+                   $result2 = mysqli_query($con,$sql2);
+                   while($row2=mysqli_fetch_array($result2,MYSQLI_NUM)){
+                    if($row2[2]=="newAdd"){
+                      $sql3="select * from users where ID='$row2[4]'";
+                      
+                      $result3 = mysqli_query($con,$sql3);
+                      $row3=mysqli_fetch_array($result3,MYSQLI_NUM);
+
+                      $sql4="select * from ".$row[1]."buggroup where bugID='$row2[0]'";
+                      $result4 = mysqli_query($con,$sql4);
+                      $row4=mysqli_fetch_array($result4,MYSQLI_NUM);
+
+                      $sql5="select * from ".$row[1]."membergroup where name='$usrID'";
+                      $result5 = mysqli_query($con,$sql5);
+                      $row5=mysqli_fetch_array($result5,MYSQLI_NUM);
+
+
+                      if($row4[1]==$row5[0])
+                      echo "<li class=\"clearfix\">
+                  <div class=\"txt\"> <a href=\"bug.php\" > 
+                  ".$row2[6]."   ".$row2[1]."
+                   </a><span class=\"by label\">Creator:".$row3[1]."</span> <span class=\"date badge badge-important\">".$row2[3]."</span> </div>
+                  <div class=\"pull-right\"> <a 
+                  class=\"tip\" href=\"insertAction/acceptBugAction.php?bugID=$row2[0]&projectID=$row[1]\" onclick=\"acceptBug()\" title=\"Accept\"><i class=\"icon-pencil\"></i></a> </div>
+                </li>";
+                    }
+                   }
+              }
+              }                         
+
+              ?>
               </ul>
             </div>
           </div>
@@ -170,5 +198,13 @@ Session_Start();
 <script src="js/jquery.ui.custom.js"></script> 
 <script src="js/bootstrap.min.js"></script> 
 <script src="js/matrix.js"></script>
+<script type="text/javascript">
+function acceptBug(){
+
+}
+  
+
+</script>
+
 </body>
 </html>

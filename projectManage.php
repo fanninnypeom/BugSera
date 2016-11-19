@@ -200,17 +200,17 @@ exit();
             </div>
             <div class="control-group">
               <label class="control-label">截止时间 :</label>
-              <div class= style="display:none""controls" style="display:none">
+              <div class="controls">
                 <input style="width:350px;" type="text" class="span11" id="dueTime" placeholder="截止时间" name="dueTime"/>
               </div>
             </div>
             <div class="control-group">
               <label class="control-label">项目描述</label>
-              <div class= style="display:none""controls"> <textarea style="width:350px;" class="span11" name="description"  style="display:none"id="description"></textarea>
+              <div class= "controls"> <textarea style="width:350px;" class="span11" name="description"  id="description"></textarea>
               </div>
             </div>
              <div class="form-actions">
-              <button onclick="submit()" type="submit" class="btn btn-success"  style="display:none">创建</b style="display:none"utton>
+              <button onclick="submit()" type="submit" class="btn btn-success"  >创建</button>
             </div>
            </form>
         </div>
