@@ -268,7 +268,6 @@ $createrName=$t1[1];
               </li>";
             }
               ?>
-              </li>
             </ul>
           </div>
         </div>
