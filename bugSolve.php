@@ -127,61 +127,116 @@ Session_Start();
     <hr>
     <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-ok"></i></span>
-            <h5>待解决的Bug</h5>
+            <h5>unSolved Bug list</h5>
           </div>
           <div class="widget-content">
             <div class="todo">
               <ul>
-                <li class="clearfix">
-                  <div class="txt"> Luanch This theme on Themeforest <span class="by label">Nirav</span> <span class="date badge badge-important">紧急</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> Manage Pending Orders <span class="by label">Alex</span> <span class="date badge badge-warning">重要</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> MAke your desk clean <span class="by label">Admin</span> <span class="date badge badge-success">一般</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> Today we celebrate the great looking theme <span class="by label">Admin</span> <span class="date badge badge-info">缺陷</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li><li class="clearfix">
-                  <div class="txt"> Manage  all the orders <span class="by label">Mark</span> <span class="date badge badge-info"> 缺陷</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
+                <?php
+    //  echo "~~~~~~~~~~~~~~~~~~~";
+      
+                $con = mysqli_connect("localhost","root","");
+  if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+  mysqli_select_db($con,"bugfade");
+   $id=$_SESSION["ID"];
+   $result1=mysqli_query($con,"select projectID from $id"."project");
+   while($p=mysqli_fetch_array($result1,MYSQLI_NUM))
+   {
+    $test_group=mysqli_query($con,"select memberID from $p[0]"."membermanage where position = 'developer' and memberID='$id' ");
+    $flag=false; 
+    if(count($test_group)<=0)
+      continue; 
+    while($t=mysqli_fetch_array($test_group,MYSQLI_NUM))
+    {
+      if($t[0]==$id)
+        $flag=true;
+    }
+    if($flag==true)
+    {
+      $b=mysqli_query($con,"select * from $p[0]"."bugresponsibility where resID='$id'");
+      while($bl=mysqli_fetch_array($b,MYSQLI_NUM)){
+      $bug=mysqli_query($con,"select * from $p[0]"."buginfo where ID='$bl[0]'");
+
+      while($buglist=mysqli_fetch_array($bug,MYSQLI_NUM))
+      {
+        $z=mysqli_query($con,"select * from users where ID='$buglist[4]'");
+        $zz=mysqli_fetch_array($z,MYSQLI_NUM);
+      
+        if($buglist[2]!="solved")
+        echo "<li class=\"clearfix\">
+                  <div  href=\"bug.php?bugID=".$buglist[0]."&projectID=".$p[0]."\" class=\"txt\"> "."$buglist[6] "." : "." $buglist[1] "." <span class=\"by label\">"."$zz[1]"." </span> <span class=\"date badge badge-important\">"."$buglist[3]"."</span> 
+
+                  <a class=\"date badge badge-important\" href=\"bug.php?bugID=".$buglist[0]."&projectID=".$p[0]."\"> go</a>
+                  </div><div class=\"pull-right\"> 
+                  
+            
+                  </div></li>";  
+      }
+}
+    }
+   }
+               ?>
               </ul>
             </div>
-           </div>
+          </div>
         </div>
- <div class="widget-box">
+
+<hr>
+    <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-ok"></i></span>
-        <h5>已解决的Bug</h5>
+            <h5>solved Bug list</h5>
           </div>
           <div class="widget-content">
             <div class="todo">
               <ul>
-                <li class="clearfix">
-                  <div class="txt"> Luanch This theme on Themeforest <span class="by label">Nirav</span> <span class="date badge badge-important">紧急</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> Manage Pending Orders <span class="by label">Alex</span> <span class="date badge badge-warning">重要</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                 <div class="txt"> MAke your desk clean <span class="by label">Admin</span> <span class="date badge badge-success">一般</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> Today we celebrate the great looking theme <span class="by label">Admin</span> <span class="date badge badge-info">缺陷</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
-                <li class="clearfix">
-                  <div class="txt"> Manage all the orders <span class="by label">Mark</span> <span class="date badge badge-info">缺陷</span> </div>
-                  <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
-                </li>
+                
+                <?php
+    //  echo "~~~~~~~~~~~~~~~~~~~";
+      
+                $con = mysqli_connect("localhost","root","");
+  if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+  mysqli_select_db($con,"bugfade");
+   $id=$_SESSION["ID"];
+   $result1=mysqli_query($con,"select projectID from $id"."project");
+   while($p=mysqli_fetch_array($result1,MYSQLI_NUM))
+   {
+    $test_group=mysqli_query($con,"select memberID from $p[0]"."membermanage where position = 'developer' and memberID='$id' ");
+    $flag=false; 
+    if(count($test_group)<=0)
+      continue; 
+    while($t=mysqli_fetch_array($test_group,MYSQLI_NUM))
+    {
+      if($t[0]==$id)
+        $flag=true;
+    }
+    if($flag==true)
+    {
+      $bug=mysqli_query($con,"select * from $p[0]"."buginfo where solverID='$id'");
+
+      while($buglist=mysqli_fetch_array($bug,MYSQLI_NUM))
+      {
+
+        $z=mysqli_query($con,"select * from users where ID='$buglist[4]'");
+        $zz=mysqli_fetch_array($z,MYSQLI_NUM);
+        echo "<li class=\"clearfix\">
+                  <div  href=\"bug.php?bugID=".$buglist[0]."&projectID=".$p[0]."\" class=\"txt\"> "."$buglist[6] "." : "." $buglist[1] "." <span class=\"by label\">"."$zz[1]"." </span> <span class=\"date badge badge-important\">"."$buglist[3]"."</span> 
+
+                  <a class=\"date badge badge-important\" href=\"bug.php?bugID=".$buglist[0]."&projectID=".$p[0]."\"> go</a>
+                  </div><div class=\"pull-right\"> 
+                  
+                 
+                  </div></li>";  
+      }
+
+    }
+   }
+               ?>
               </ul>
             </div>
           </div>

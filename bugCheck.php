@@ -127,7 +127,7 @@ Session_Start();
     <hr>
     <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-ok"></i></span>
-            <h5>Bug list</h5>
+            <h5>unChecked Bug list</h5>
           </div>
           <div class="widget-content">
             <div class="todo">
@@ -161,11 +161,16 @@ Session_Start();
       while($buglist=mysqli_fetch_array($bug,MYSQLI_NUM))
       {
 
+        $z=mysqli_query($con,"select * from users where ID='$buglist[4]'");
+        $zz=mysqli_fetch_array($z,MYSQLI_NUM);
         echo "<li class=\"clearfix\">
-                  <div class=\"txt\"> "."$buglist[6] "." : "." $buglist[1] "." <span class=\"by label\">"."$buglist[4]"." </span> <span class=\"date badge badge-important\">"."$buglist[3]"."</span> </div><div class=\"pull-right\"> 
+                  <div  href=\"bug.php?bugID=".$buglist[0]."&projectID=".$p[0]."\" class=\"txt\"> "."$buglist[6] "." : "." $buglist[1] "." <span class=\"by label\">"."$zz[1]"." </span> <span class=\"date badge badge-important\">"."$buglist[3]"."</span> 
+
+                  <a class=\"date badge badge-important\" href=\"bug.php?bugID=".$buglist[0]."&projectID=".$p[0]."\"> go</a>
+                  </div><div class=\"pull-right\"> 
+                  
                   <a class=\"tip\" href=\"insertAction/deleteBugAction.php?bugID=$buglist[0]&projectID=$p[0]\" title=\"拒绝添加\"><i class=\"icon-remove\"></i></a> 
 <a  href=\"#\" onclick=popBug(this) bugId=\"$buglist[0]\" projectID=\"$p[0]\" title=\"同意添加\"><i class=\"icon-plus\"></i></a> 
-                  
                   </div></li>";  
       }
 
@@ -177,6 +182,67 @@ Session_Start();
           </div>
         </div>
 
+<hr>
+    <div class="widget-box">
+          <div class="widget-title"> <span class="icon"><i class="icon-ok"></i></span>
+            <h5>checked Bug list</h5>
+          </div>
+          <div class="widget-content">
+            <div class="todo">
+              <ul>
+                <?php
+    //  echo "~~~~~~~~~~~~~~~~~~~";
+      
+                $con = mysqli_connect("localhost","root","");
+  if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+  mysqli_select_db($con,"bugfade");
+   $id=$_SESSION["ID"];
+   $result1=mysqli_query($con,"select projectID from $id"."project");
+   while($p=mysqli_fetch_array($result1,MYSQLI_NUM))
+   {
+    $test_group=mysqli_query($con,"select memberID from $p[0]"."membermanage where position = 'tester' and memberID='$id' ");
+    $flag=false; 
+    if(count($test_group)<=0)
+      continue; 
+    while($t=mysqli_fetch_array($test_group,MYSQLI_NUM))
+    {
+      if($t[0]==$id)
+        $flag=true;
+    }
+    if($flag==true)
+    {
+
+      $b=mysqli_query($con,"select * from $p[0]"."bugcheck where checkerID='$id'");
+      $bl=mysqli_fetch_array($b,MYSQLI_NUM);
+
+      $bug=mysqli_query($con,"select * from $p[0]"."buginfo where ID='$bl[0]'");
+
+      while($buglist=mysqli_fetch_array($bug,MYSQLI_NUM))
+      {
+
+        $z=mysqli_query($con,"select * from users where ID='$buglist[4]'");
+        $zz=mysqli_fetch_array($z,MYSQLI_NUM);
+        echo "<li class=\"clearfix\">
+                  <div class=\"txt\"> "."$buglist[6] "." : "." $buglist[1] "." <span class=\"by label\">"."$zz[1]"." </span> 
+                  <span class=\"date badge badge-important\">"."$buglist[3]"."</span> 
+                  <a class=\"date badge badge-important\" href=\"bug.php?bugID=".$buglist[0]."&projectID=".$p[0]."\"> go</a>
+                  </div><div class=\"pull-right\">
+                  </div></li>";  
+      }
+
+    }
+   }
+               ?>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+
+
     
   </div>
 </div>
@@ -185,11 +251,86 @@ Session_Start();
   <div id="footer" class="span12"> 2016 &copy; WuNing &amp;LiuYing. Power by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
 </div>
 
+<div id="bugForm" class="widget-box" style="position:absolute; top:100px; right:600px;width:600px; height:160px;background:#DDD; display:none">
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>Bug-info</h5>
+        </div>
+        <div class="widget-content nopadding" style="background:#DDD">
+          <form class="form-horizontal" name=bugF>
+            
+            <center>
+            <select id="groupSelect" class="form-control" style="
+          width:100px;
+background-color: #eee;
+
+">
+</select>
+            <select id="prioritySelect" class="form-control" style="
+          width:100px;background-color: #eee;
+">
+<option value="1">一般</option>
+<option value="2">重要</option>
+<option value="3">紧急</option>
+<option value="4">非常紧急</option>
+</select>
+</center>
+            
+          </form>
+          <div style="background:#DDD">
+              <button onclick="submitBug()" class="btn btn-success">Save</button>
+            </div>
+        </div>
+      </div>
+
+
 <!--end-Footer-part-->
 <script src="js/jquery.min.js"></script> 
 <script src="js/jquery.ui.custom.js"></script> 
 <script src="js/bootstrap.min.js"></script> 
 <script src="js/matrix.js"></script>
+<script type="text/javascript">
+var name="WuNing";
+function popBug(t){
+    var bugID=t.getAttribute("bugID");
+    var projectID=t.getAttribute("projectID");
+    $("#bugForm").attr("bugID",bugID);
+    $("#bugForm").attr("projectID",projectID);
+    $("#bugForm").css("display","");
+    $.ajax({
+    url: 'insertAction/loadGroup.php',
+    method:'post',
+    data: {
+    projectID: projectID
+    },
+    success: function(data){
+        $("#groupSelect").html(data);
+    }
+})
+}
+function submitBug(){
+    var bugID=$("#bugForm").attr("bugID");
+    var projectID=$("#bugForm").attr("projectID");
+    var group=document.getElementById("groupSelect").value;
+    var priority=document.getElementById("prioritySelect").value;
+    console.log(bugID);
+    console.log(projectID);
+    console.log(group);
+    console.log(priority);
+    $("#bugForm").css("display","none");
+    $.ajax({
+    url: 'insertAction/acceptBugCheckAction.php',
+    method:'post',
+    data: {
+    bugID: bugID,
+    projectID: projectID,
+    group: group,
+    priority: priority
+    }
+  })
+
+}
+
+</script>
 
 </body>
 </html>

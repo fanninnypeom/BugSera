@@ -124,38 +124,69 @@ Session_Start();
     <h1>解决方案 </h1>
   </div>
   <div class="container-fluid">
+<?php
+    //  echo "~~~~~~~~~~~~~~~~~~~";
+      
+                $con = mysqli_connect("localhost","root","");
+  if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+  mysqli_select_db($con,"bugfade");
+   $id=$_SESSION["ID"];
+   $result1=mysqli_query($con,"select * from $id"."project");
+   while($p=mysqli_fetch_array($result1,MYSQLI_NUM))
+   {
+    $test_group=mysqli_query($con,"select memberID from $p[1]"."membermanage where position = 'developer' and memberID='$id' ");
+    $flag=false; 
+    if(count($test_group)<=0)
+      continue; 
+    while($t=mysqli_fetch_array($test_group,MYSQLI_NUM))
+    {
+      if($t[0]==$id)
+        $flag=true;
+    }
+    if($flag==true)
+    {
+      $s=mysqli_query($con,"select * from $p[1]"."solutions where solverID='$id'");
+
+      while($solutions=mysqli_fetch_array($s,MYSQLI_NUM))
+      {
+
+        $z=mysqli_query($con,"select * from $p[1]"."buginfo where ID='$solutions[2]'");
+        $zz=mysqli_fetch_array($z,MYSQLI_NUM);
+        $state="";
+        if($solutions[4]==1)
+          $state="通过";
+        else
+          $state="待验证";
+        echo "        
     <hr>
-    <div class="row-fluid">
-      <div class="span12">
-        <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-list"></i> </span>
-            <h5><a href="project.php">ZF_0101</a></h5>
-            <span class="icon"></span>
-            <span class="icon"> 来源Bug </span>
-            <h5><a href="bug.php">can't run demo.py</a></h5>
-            <h5><span class="date badge badge-important">待验证</span></h5>
+    <div class=\"row-fluid\">
+      <div class=\"span12\">
+        <div class=\"widget-box\">
+          <div class=\"widget-title\"> <span class=\"icon\"> <i class=\"icon-list\"></i> </span>
+            <h5><a href=\"project.php?ID=".$p[1]."&type=0\">".$p[2]."</a></h5>
+            <span class=\"icon\"></span>
+            <span class=\"icon\"> 来源Bug </span>
+            <h5><a href=\"bug.php?bugID=".$solutions[2]."&projectID=".$p[1]."\">".$zz[6]."</a></h5>
+            <h5><span class=\"date badge badge-important\">".$state."</span></h5>
           </div>
-          <div class="widget-content"> 
-          注释掉train_net.py中的set_mode_gpu,重新make</div>
+          <div class=\"widget-content\">
+".$solutions[1]."
+          </div>
         </div>
       </div>
     </div>
-  <div  class="row-fluid ">  
-       <div class="span12">
-        <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-list"></i> </span>
-            <h5><a href="project.php">TA_1211</a></h5>
-            <span class="icon"></span>
-            <span class="icon"> 来 源Bug </span>
-            <h5><a href="bug.php ">can't run demo.py</a></h5>
-            <h5><span class="date  badge badge-important">通过</span></h5>
-          </div> 
-          <div class="widget-content"> 
-          使用gcc5.0重新编译protobuf即可 </div>
-         </div>
-       </div>
+        "; 
+      }
 
-     </div>
+    }
+   }
+               ?>
+
+
+
     
   </div>
 </di style="display:none"v>

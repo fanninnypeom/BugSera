@@ -20,7 +20,7 @@ $type=$_GET['type'];
 $uID=$_SESSION["ID"]; //用户ID
 //根据type的不同跳转到不同的php页面，以实现对不同的角色显示不同的页面
 if($type==0){
-  $s="select position from $ID"."membermanage where ID="."'$uID'";
+  $s="select position from $ID"."membermanage where memberID="."'$uID'";
   $result = mysqli_query($con,$s);
   $t=mysqli_fetch_array($result,MYSQLI_NUM);
   if(count($t[0])==0){
