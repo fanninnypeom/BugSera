@@ -124,9 +124,9 @@ exit();
 
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="index.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">管理的项目</a> </div>
+    <div id="breadcrumb"> <a href="index.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">维护的项目</a> </div>
 
-    <h1>测试的项目 </h1>
+    <h1>维护的项目 </h1>
     
   </div>
   <div class="container-fluid">

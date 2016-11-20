@@ -25,6 +25,7 @@ exit();
 
 <!--Header-part-->
 <div id="header">
+  
   <h1><a href="dashboard.html">Bug Fade</a></h1>
 </div>
 <!--close-Header-part-->
@@ -50,18 +51,6 @@ exit();
         <li><a href="#"><i class="icon-check"></i> My Tasks</a></li>
       </ul>
     </li>
-    <li class="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">Messages</span> <span class="label label-important">5</span> <b class="caret"></b></a>
-      <ul class="dropdown-menu">
-        <li><a class="sAdd" title="" href="#"><i class="icon-plus"></i> new message</a></li>
-        <li class="divider"></li>
-        <li><a class="sInbox" title="" href="#"><i class="icon-envelope"></i> inbox</a></li>
-        <li class="divider"></li>
-        <li><a class="sOutbox" title="" href="#"><i class="icon-arrow-up"></i> outbox</a></li>
-        <li class="divider"></li>
-        <li><a class="sTrash" title="" href="#"><i class="icon-trash"></i> trash</a></li>
-      </ul>
-    </li>
-    <li class=""><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">Settings</span></a></li>
     <li class=""><a title="" href=
 <?php 
     if(count($_SESSION)!=0&&$_SESSION["login"]==1)
@@ -104,7 +93,7 @@ exit();
         <li><a href="projectMaintain.php">维护的项目</a></li>
       </ul>
     </li>
-    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Bug</span> <span class="label label-important">3</span></a>
+    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Bug</span> <span class="label label-important">4</span></a>
       <ul>
         <li><a href="bugSubmit.php">Bug &amp; 提交</a></li>
         <li><a href="bugCheck.php">Bug &amp; 审核</a></li>
@@ -174,12 +163,14 @@ exit();
             </div>
             <div class="span3">
               <ul class="site-stats">
+
+
+                <li class="bg_lh"><i class="icon-shopping-cart"></i> <strong>656</strong> <small>Total Reputation</small></li>
                 <li class="bg_lh"><i class="icon-user"></i> <strong>2540</strong> <small>Total Users</small></li>
-                <li class="bg_lh"><i class="icon-plus"></i> <strong>120</strong> <small>New Users </small></li>
-                <li class="bg_lh"><i class="icon-shopping-cart"></i> <strong>656</strong> <small>Total Shop</small></li>
-                <li class="bg_lh"><i class="icon-tag"></i> <strong>9540</strong> <small>Total Orders</small></li>
-                <li class="bg_lh"><i class="icon-repeat"></i> <strong>10</strong> <small>Pending Orders</small></li>
-                <li class="bg_lh"><i class="icon-globe"></i> <strong>8540</strong> <small>Online Orders</small></li>
+                <li class="bg_lh"><i class="icon-plus"></i> <strong>120</strong> <small>Total Projects </small></li>
+                <li class="bg_lh"><i class="icon-repeat"></i> <strong>10</strong> <small>Total Bugs</small></li>
+                <li class="bg_lh"><i class="icon-globe"></i> <strong>8540</strong> <small>Total Solutions</small></li>
+                <li class="bg_lh"><i class="icon-globe"></i> <strong>8540</strong> <small>Total Solutions</small></li>
               </ul>
             </div>
           </div>
@@ -225,26 +216,26 @@ exit();
 <script type="text/javascript">
   // This function is called from the pop-up menus to transfer to
   // a different page. Ignore if the value returned is a null string:
-  function goPage (newURL) {
+//  function goPage (newURL) {
 
       // if url is empty, skip the menu dividers and reset the menu selection to default
-      if (newURL != "") {
+//      if (newURL != "") {
       
           // if url is "-", it is this page -- reset the menu:
-          if (newURL == "-" ) {
-              resetMenu();            
-          } 
+//          if (newURL == "-" ) {
+//              resetMenu();            
+ //         } 
           // else, send page to designated URL            
-          else {  
-            document.location.href = newURL;
-          }
-      }
-  }
+  //        else {  
+  //          document.location.href = newURL;
+  //        }
+  //    }
+ // }
 
 // resets the menu selection upon entry to this page:
-function resetMenu() {
-   document.gomenu.selector.selectedIndex = 2;
-}
+//function resetMenu() {
+//   document.gomenu.selector.selectedIndex = 2;
+//}
 
 <?php
 /*
