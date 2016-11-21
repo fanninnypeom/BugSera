@@ -76,18 +76,7 @@ $createrName=$t1[1];
         <li><a href="#"><i class="icon-check"></i> My Tasks</a></li>
       </ul>
     </li>
-    <li class="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">Messages</span> <span class="label label-important">5</span> <b class="caret"></b></a>
-      <ul class="dropdown-menu">
-        <li><a class="sAdd" title="" href="#"><i class="icon-plus"></i> new message</a></li>
-        <li class="divider"></li>
-        <li><a class="sInbox" title="" href="#"><i class="icon-envelope"></i> inbox</a></li>
-        <li class="divider"></li>
-        <li><a class="sOutbox" title="" href="#"><i class="icon-arrow-up"></i> outbox</a></li>
-        <li class="divider"></li>
-        <li><a class="sTrash" title="" href="#"><i class="icon-trash"></i> trash</a></li>
-      </ul>
-    </li>
-    <li class=""><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">Settings</span></a></li>
+  
     <li class=""><a title="" href=
 <?php 
     if(count($_SESSION)!=0&&$_SESSION["login"]==1)
@@ -135,14 +124,14 @@ $createrName=$t1[1];
     </li>
     <li><a href="solutions.php"><i class="icon icon-tint"></i> <span>解决方案</span></a></li>
 
-    <li class="content" > <span>Monthly Bandwidth Transfer</span>
+    <li class="content" style="display: none;"> <span>Monthly Bandwidth Transfer</span>
       <div class="progress progress-mini progress-danger active progress-striped">
         <div style="width: 77%;" class="bar"></div>
       </div>
       <span class="percent">77%</span>
       <div class="stat">21419.94 / 14000 MB</div>
     </li>
-    <li class="content" > <span>Disk Space Usage</span>
+    <li class="content" style="display: none;"> <span>Disk Space Usage</span>
       <div class="progress progress-mini active progress-striped">
         <div style="width: 87%;" class="bar"></div>
       </div>
@@ -155,17 +144,17 @@ $createrName=$t1[1];
   <div id="content-header">
     <div id="breadcrumb"> <a href="index.php" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">project</a> </div>
     <h1>项目信息</h1>
-    <button class="btn btn-large btn-danger" style="position: relative;left: 250px;top: 0px;" onclick="popBug()"
+    <button class="btn btn-large btn-danger" style="position: relative;left: 50px;top: 0px;" onclick="popBug()"
    >报告一个bug</button>
-    <button class="btn btn-large btn-danger" style="position: relative;left: 350px;top: 0px;" onclick="popManager()"
+    <button class="btn btn-large btn-danger" style="position: relative;left: 150px;top: 0px;" onclick="popManager()"
    >申请成为管理人员</button>
     <button class="btn btn-large btn-success" style="position: relative;
-  left: 450px;
+  left: 250px;
   top: 0px;"
   onclick="popDeveloper()"
    >申请成为开发人员</button>
     <button class="btn btn-large btn-primary" style="position: relative;
-  left: 550px;
+  left: 350px;
   top: 0px;"
   onclick="popTester()"
    >申请成为测试人员</button>

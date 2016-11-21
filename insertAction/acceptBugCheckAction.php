@@ -40,4 +40,7 @@ VALUES
 $result = mysqli_query($con,$s);
 
 
+header("Location: http://127.0.0.1/bugcheck.php");//
+exit();  
+
 ?>

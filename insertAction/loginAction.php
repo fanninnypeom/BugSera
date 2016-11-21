@@ -9,7 +9,7 @@ if (!$con)
 
 mysql_select_db("BugFade", $con);
 
-$sql="select * from users where ID='$_POST[userID]' and password='$_POST[password]'";
+$sql="select * from users where Name='$_POST[userID]' and password='$_POST[password]'";
 
 $result = mysql_query($sql) or die(mysql_error());//得到已有用户的数量
 $row = mysql_fetch_array($result);
