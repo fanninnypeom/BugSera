@@ -151,6 +151,7 @@ Session_Start();
 
       while($buglist=mysqli_fetch_array($bug,MYSQLI_NUM))
       {
+        if($buglist[7]!=$id){
         $z=mysqli_query($con,"select * from users where ID='$buglist[4]'");
         $zz=mysqli_fetch_array($z,MYSQLI_NUM);
       
@@ -162,7 +163,8 @@ Session_Start();
                   </div><div class=\"pull-right\"> 
                   
             
-                  </div></li>";  
+                  </div></li>"; 
+                  } 
       } 
 }
     }
