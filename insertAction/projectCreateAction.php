@@ -79,7 +79,8 @@ ID varchar(20),
 content varchar(1000),
 bugID varchar(20),
 solverID varchar(20),
-accept int(1)
+accept int(1),
+time date
 )";
 mysql_query($sql,$con);
 
@@ -161,7 +162,73 @@ if (!mysql_query($sql,$con))
 
 
 
+
+
 mysql_close($con);
+
+
+
+/////////////////////以下为接受Bug的触发器
+$con = mysqli_connect("localhost","root","");
+  if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+mysqli_select_db($con,"bugfade");
+
+
+$result=mysqli_query($con,"select ID from projects");
+while($t2=mysqli_fetch_array($result,MYSQLI_NUM)){
+$sql="DROP TRIGGER IF EXISTS accept".$t2[0]."BugTrigger;";
+$con->query($sql);
+$sql="CREATE TRIGGER accept".$t2[0]."BugTrigger 
+AFTER INSERT ON ".$t2[0]."bugresponsibility 
+FOR EACH ROW
+BEGIN 
+UPDATE "."$t2[0]"."buginfo SET state='doing' WHERE ID=new.bugID;
+END;";
+$con->query($sql);
+}
+
+//////////////////以下为删除项目人员的触发器
+$result=mysqli_query($con,"select ID from projects");
+while($t2=mysqli_fetch_array($result,MYSQLI_NUM)){
+$sql="DROP TRIGGER IF EXISTS del".$t2[0]."MemberTrigger;";
+$con->query($sql);
+$sql="CREATE TRIGGER del".$t2[0]."MemberTrigger 
+AFTER DELETE ON ".$t2[0]."membermanage 
+FOR EACH ROW
+BEGIN 
+DELETE FROM ".$t2[0]."membergroup WHERE name=old.memberID;
+END;";
+$con->query($sql);
+}
+
+//////////////////以下为解决方案状态被修改之后bug的触发器
+$result=mysqli_query($con,"select ID from projects");
+while($t2=mysqli_fetch_array($result,MYSQLI_NUM)){
+$sql="DROP TRIGGER IF EXISTS ".$t2[0]."SolutionTrigger;";
+$con->query($sql);
+$sql="CREATE TRIGGER ".$t2[0]."SolutionTrigger 
+AFTER UPDATE ON ".$t2[0]."solutions 
+FOR EACH ROW
+BEGIN 
+if(1=new.accept) then
+UPDATE ".$t2[0]."buginfo SET solverID = new.solverID WHERE ID =new.bugID;
+if(new.accept!=old.accept) then
+UPDATE  users SET Reputation = Reputation+1 WHERE ID =new.solverID;
+end if;
+elseif (0 = new.accept) then 
+UPDATE ".$t2[0]."buginfo SET solverID = 'null' WHERE ID =new.bugID;
+if(new.accept!=old.accept) then
+UPDATE users SET Reputation = Reputation-1 WHERE ID =new.solverID;
+end if;
+end if;
+END;";
+$con->query($sql);
+}
+
+
 
 header("Location: http://127.0.0.1/projectManage.php");//跳转回项目管理界面
 //确保重定向后，后续代码不会被执行

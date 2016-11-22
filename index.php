@@ -5,11 +5,77 @@ if(!$_SESSION["login"]){
 header("Location: http://127.0.0.1/error404.php");//
 exit();  
 }
+
+
+$ID=$_SESSION["ID"];
+//$con = new mysqli('localhost', 'test', '', 'test');
+$con = mysqli_connect("localhost","root","");
+  if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+$z=mysqli_select_db($con,"bugfade");
+if(!$z){
+  mysqli_query($con,"CREATE DATABASE bugfade");
+  mysqli_select_db($con,"bugfade");
+}
+
+if(mysqli_num_rows(mysqli_query($con,"SHOW TABLES LIKE '%users%'"))==1) {
+} else {
+   $sql = "CREATE TABLE users 
+(
+ID varchar(20),
+Name varchar(20),
+Password varchar(20),
+Email varchar(20),
+Reputation int(10)
+)";
+mysqli_query($con,$sql);
+}
+if(mysqli_num_rows(mysqli_query($con,"SHOW TABLES LIKE '%total%'"))==1) {
+} else {
+   $sql = "CREATE TABLE total 
+(
+name varchar(20),
+length int(10)
+)";
+mysqli_query($con,$sql);
+}
+if(mysqli_num_rows(mysqli_query($con,"SHOW TABLES LIKE '%projects%'"))==1) {
+} else {
+   $sql = "CREATE TABLE projects 
+(
+ID varchar(20),
+createrID varchar(20),
+createdTime date,
+dueTime date,
+description varchar(1024),
+name varchar(20)
+)";
+mysqli_query($con,$sql);
+}
+
+///////////////以下为删除项目的触发器
+$sql="DROP TRIGGER IF EXISTS deleteProjectTrigger;";
+$con->query($sql);
+$sql="CREATE TRIGGER deleteProjectTrigger 
+AFTER DELETE ON projects
+FOR EACH ROW
+BEGIN 
+";
+$result=mysqli_query($con,"select ID from users");
+while($t2=mysqli_fetch_array($result,MYSQLI_NUM)){
+  $sql=$sql."DELETE from $t2[0]"."project where projectID=old.ID;";
+}
+$sql=$sql." END;";
+$con->query($sql);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Bug Fade</title>
+<title id="zz" userID="<?php echo $ID; ?>">Bug Fade</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="css/bootstrap.min.css" />
@@ -159,18 +225,61 @@ exit();
         <div class="widget-content" >
           <div class="row-fluid">
             <div class="span9">
-              <div class="chart"></div>
+              <div id="placeholder" class="chart"></div>
             </div>
             <div class="span3">
               <ul class="site-stats">
+<?php 
+$myProjectNum=0;
+$result=mysqli_query($con,"select * from ".$ID."project");
+while($t2=mysqli_fetch_array($result,MYSQLI_NUM)){
+  $myProjectNum=$myProjectNum+1;
+}
+
+$result=mysqli_query($con,"select * from users where ID='$ID'");
+$t2=mysqli_fetch_array($result,MYSQLI_NUM);
+$reputation=$t2[4];
+
+$totalUsers=0;
+$result=mysqli_query($con,"select * from users");
+while($t2=mysqli_fetch_array($result,MYSQLI_NUM)){
+  $totalUsers=$totalUsers+1;
+}
 
 
-                <li class="bg_lh"><i class="icon-shopping-cart"></i> <strong>656</strong> <small>Total Reputation</small></li>
-                <li class="bg_lh"><i class="icon-user"></i> <strong>2540</strong> <small>Total Users</small></li>
-                <li class="bg_lh"><i class="icon-plus"></i> <strong>120</strong> <small>Total Projects </small></li>
-                <li class="bg_lh"><i class="icon-repeat"></i> <strong>10</strong> <small>Total Bugs</small></li>
-                <li class="bg_lh"><i class="icon-globe"></i> <strong>8540</strong> <small>Total Solutions</small></li>
-                <li class="bg_lh"><i class="icon-globe"></i> <strong>8540</strong> <small>Total Solutions</small></li>
+$totalProjects=0;
+$result=mysqli_query($con,"select * from projects");
+while($t2=mysqli_fetch_array($result,MYSQLI_NUM)){
+  $totalProjects=$totalProjects+1;
+}
+
+$totalBugs=0;
+$result=mysqli_query($con,"select projectID from ".$ID."project");
+while($t2=mysqli_fetch_array($result,MYSQLI_NUM)){
+  $result1=mysqli_query($con,"select ID from $t2[0]"."buginfo");
+  while($t3=mysqli_fetch_array($result1,MYSQLI_NUM)){
+    $totalBugs=$totalBugs+1;
+  }
+}
+
+$totalSolutions=0;
+$result=mysqli_query($con,"select projectID from ".$ID."project");
+while($t2=mysqli_fetch_array($result,MYSQLI_NUM)){
+  $result1=mysqli_query($con,"select ID from $t2[0]"."solutions");
+  while($t3=mysqli_fetch_array($result1,MYSQLI_NUM)){
+    $totalSolutions=$totalSolutions+1;
+  }
+}
+
+
+?>
+
+                <li class="bg_lh"><i class="icon-shopping-cart"></i> <strong><?php echo $myProjectNum; ?></strong> <small>My Projects</small></li>
+                <li class="bg_lh"><i class="icon-user"></i> <strong><?php echo $reputation; ?></strong> <small>My Reputation</small></li>
+                <li class="bg_lh"><i class="icon-globe"></i> <strong><?php echo $totalUsers; ?></strong> <small>Total Users</small></li>
+                <li class="bg_lh"><i class="icon-plus"></i> <strong><?php echo $totalProjects; ?></strong> <small>Total Projects </small></li>
+                <li class="bg_lh"><i class="icon-repeat"></i> <strong><?php echo $totalBugs; ?></strong> <small>Total Bugs</small></li>
+                <li class="bg_lh"><i class="icon-globe"></i> <strong><?php echo $totalSolutions; ?></strong> <small>Total Solutions</small></li>
               </ul>
             </div>
           </div>
@@ -200,7 +309,6 @@ exit();
 <script src="js/jquery.peity.min.js"></script> 
 <script src="js/fullcalendar.min.js"></script> 
 <script src="js/matrix.js"></script> 
-<script src="js/matrix.dashboard.js"></script> 
 <script src="js/jquery.gritter.min.js"></script> 
 <script src="js/matrix.interface.js"></script> 
 <script src="js/matrix.chat.js"></script> 
@@ -270,6 +378,109 @@ function search(){
    ?>");
  //   window.location.href = 'http://127.0.0.1/project.php?type=0&name='+name;
 }
+//////////////////////chart
+
+    var sin = [],
+      cos = [];
+    var userID=$("#zz").attr("userID");
+      $.ajax({
+    url: 'getRecentBug.php',
+    method:'post',
+    data: {
+    userID: userID
+    },
+    success: function(data){
+        sin=data;
+    }
+})
+      $.ajax({
+    url: 'getRecentSolution.php',
+    method:'post',
+    data: {
+    userID: userID
+    },
+    success: function(data){
+        console.log(data);
+        cos=data;
+    }
+})
+
+setTimeout("loadChart()","500"); //等待ajax加载
+function loadChart() {
+
+
+      /*
+    for (var i = 0; i < 10; i += 1) {
+      sin.push([i, i]);
+      cos.push([i, i+1]);
+    }
+*/
+    var plot = $.plot("#placeholder", [
+      { data: sin, label: "提出bug"},
+      { data: cos, label: "提出solution"}
+    ], {
+      series: {
+        lines: {
+          show: true
+        },
+        points: {
+          show: true
+        }
+      },
+      grid: {
+        hoverable: true,
+        clickable: true
+      },
+      yaxis: {
+        min: 0,
+        max: 16
+      }
+    });
+
+    $("<div id='tooltip'></div>").css({
+      position: "absolute",
+      display: "",
+      border: "1px solid #fdd",
+      padding: "2px",
+      "background-color": "#fee",
+      opacity: 0.80
+    }).appendTo("body");
+
+    $("#placeholder").bind("plothover", function (event, pos, item) {
+
+      if ($("#enablePosition:checked").length > 0) {
+        var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
+        $("#hoverdata").text(str);
+      }
+
+      if ($("#enableTooltip:checked").length > 0) {
+        if (item) {
+          var x = item.datapoint[0].toFixed(2),
+            y = item.datapoint[1].toFixed(2);
+
+          $("#tooltip").html(item.series.label + " of " + x + " = " + y)
+            .css({top: item.pageY+5, left: item.pageX+5})
+            .fadeIn(200);
+        } else {
+          $("#tooltip").hide();
+        }
+      }
+    });
+
+    $("#placeholder").bind("plotclick", function (event, pos, item) {
+      if (item) {
+        $("#clickdata").text(" - click point " + item.dataIndex + " in " + item.series.label);
+        plot.highlight(item.series, item.datapoint);
+      }
+    });
+
+    // Add the Flot version string to the footer
+
+    $("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
+  };
+
+  </script>
+
 </script>
 </body>
 </html>

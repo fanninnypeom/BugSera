@@ -33,10 +33,11 @@ echo $bugID;
 echo $solverID;
 
 echo $projectID;
+$ttt=date("Y-m-d H:i:s");
 
-$s="INSERT INTO "."$projectID"."solutions(ID,content,bugID,solverID,accept)
+$s="INSERT INTO "."$projectID"."solutions(ID,content,bugID,solverID,accept,time)
 VALUES
-('solution$count','$description','$bugID','$solverID',0)";
+('solution$count','$description','$bugID','$solverID',0,'$ttt')";
 echo $s;
 $result = mysqli_query($con,$s);
 ?>

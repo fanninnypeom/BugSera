@@ -12,8 +12,8 @@ $con = mysqli_connect("localhost","root","");
   die('Could not connect: ' . mysql_error());
   }
   mysqli_select_db($con,"BugFade");
- $sql="UPDATE "."$projectID"."buginfo SET state='doing' WHERE ID='$bugID'";
- $result = mysqli_query($con,$sql);
+// $sql="UPDATE "."$projectID"."buginfo SET state='doing' WHERE ID='$bugID'";
+// $result = mysqli_query($con,$sql);
 
 echo $sql;
 

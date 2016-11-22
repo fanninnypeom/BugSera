@@ -9,13 +9,13 @@ $(document).ready(function(){
 	// === Prepare the chart data ===/
 	var sin = [], cos = [];
     for (var i = 0; i < 14; i += 0.5) {
-        sin.push([i, Math.sin(i)]);
-        cos.push([i, Math.cos(i)]);
+        sin.push([i, 1.2]);
+        cos.push([i, 1.3]);
     }
 
 	// === Make chart === //
     var plot = $.plot($(".chart"),
-           [ { data: sin, label: "sin(x)", color: "#ee7951"}, { data: cos, label: "cos(x)",color: "#4fb9f0" } ], {
+           [ { data: sin, label: "bug", color: "#ee7951"}, { data: cos, label: "solution",color: "#4fb9f0" } ], {
                series: {
                    lines: { show: true },
                    points: { show: true }
@@ -38,7 +38,7 @@ $(document).ready(function(){
                 var x = item.datapoint[0].toFixed(2),
 					y = item.datapoint[1].toFixed(2);
                     
-                maruti.flot_tooltip(item.pageX, item.pageY,item.series.label + " of " + x + " = " + y);
+                maruti.flot_tooltip(item.pageX, item.pageY,item.series.label + "" + x + " = " + y);
             }
             
         } else {

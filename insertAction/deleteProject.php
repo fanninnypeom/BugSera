@@ -29,10 +29,12 @@ mysqli_query($con,"DROP TABLE "."$projectID"."membermanage");
 mysqli_query($con,"DROP TABLE "."$projectID"."membergroup");
 mysqli_query($con,"DROP TABLE "."$projectID"."solutions");
 mysqli_query($con,"DELETE FROM projects where ID='$projectID'");
-$result=mysqli_query($con,"select ID from users");
-while($t2=mysqli_fetch_array($result,MYSQLI_NUM)){
-	mysqli_query($con,"DELETE from $t2[0]"."project where projectID='$projectID'");
-}
+$sql="DROP TRIGGER IF EXISTS accept"."$projectID"."BugTrigger;";
+$con->query($sql);
+//$result=mysqli_query($con,"select ID from users");
+//while($t2=mysqli_fetch_array($result,MYSQLI_NUM)){
+//	mysqli_query($con,"DELETE from $t2[0]"."project where projectID='$projectID'");
+//}
  //print("delete success");
 //header("Location: http://127.0.0.1/error404.php");
 //echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
