@@ -251,7 +251,7 @@ $createrName=$t1[1];
 
       </div>
 
-      <div  class="widget-box" id="tip3" style="display:none ;position:absolute; top:100px; right:600px;width:600px; height:160px; " >
+      <div  class="widget-box" id="tip3" style="display:none ;position:absolute; top:100px; right:600px;width:600px; height:140px; " >
 <center>
           <h3>备注信息</h3>
 

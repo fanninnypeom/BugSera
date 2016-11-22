@@ -532,22 +532,17 @@ while($t2=mysqli_fetch_array($result2,MYSQLI_NUM)){
 
 
 
-<div  class="widget-box" id="modifyForm" style="display:none ;position:absolute; top:100px; right:400px;width:600px; height:160px; " >
+<div  class="widget-box" id="modifyForm" style="display:none ;position:absolute; top:500px; right:400px;width:600px; height:105px; " >
         <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
           <h5>修改分组</h5>
         </div>
         <div class="widget-content nopadding">
        <center>
    <div class="input-group input-group-lg" >
-                      <div class="input-group-btn input-group-lg">
+                     
       <select id="idsel_" class="form-control" style="
           width:100px;
-          appearance:none;
-          -moz-appearance:none;
--webkit-appearance:none;
-background:url(img/arrow.jpg) no-repeat right center;
 background-color: #eee;
-background-size:20%;
 ">
 <?php 
 $s2="select * from $ID"."group";
@@ -558,7 +553,6 @@ while($t2=mysqli_fetch_array($result2,MYSQLI_NUM)){
 ?>
 </select>
 </div>
-</div>
  </center>
            
               <button onclick="modify()" class="btn btn-success" >修改</button>
@@ -567,11 +561,11 @@ while($t2=mysqli_fetch_array($result2,MYSQLI_NUM)){
       </div>
 
 
-      <div  class="widget-box" id="groupForm" style="display:none ;position:absolute; top:100px; right:400px;width:600px; height:160px; " >
+      <div  class="widget-box" id="groupForm" style="display:none ;position:absolute; top:100px; right:400px;width:600px; height:160px;background-color:#FFFFFF " >
 <center>
           <h3>新增分组名字</h3>
 
-          <textarea style="width:350px;" class="span11" name="description" id="groupName"></textarea>
+          <textarea class="span6" name="description" id="groupName"></textarea>
 
       <button class="btn btn-large btn-danger" onclick="addGroup()">添加</button>
 </center>
