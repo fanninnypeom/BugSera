@@ -134,7 +134,7 @@ exit();
   }
   mysqli_select_db($con,"BugFade");
   $id=$_SESSION["ID"];
-  $s="select projectID from "."$id"."project";
+  $s="select distinct  projectID from "."$id"."project";
   $result = mysqli_query($con,$s);
     while($row = mysqli_fetch_array($result,MYSQLI_NUM)){
         $s1="select memberID from $row[0]"."membermanage where position='manager' and memberID='$id'";

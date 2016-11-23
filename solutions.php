@@ -123,10 +123,10 @@ Session_Start();
   }
   mysqli_select_db($con,"bugfade");
    $id=$_SESSION["ID"];
-   $result1=mysqli_query($con,"select * from $id"."project");
+   $result1=mysqli_query($con,"select distinct projectID from $id"."project");
    while($p=mysqli_fetch_array($result1,MYSQLI_NUM))
    {
-    $test_group=mysqli_query($con,"select memberID from $p[1]"."membermanage where position = 'developer' and memberID='$id' ");
+    $test_group=mysqli_query($con,"select memberID from $p[0]"."membermanage where position = 'developer' and memberID='$id' ");
     $flag=false; 
     if(count($test_group)<=0)
       continue; 
@@ -137,13 +137,15 @@ Session_Start();
     }
     if($flag==true)
     {
-      $s=mysqli_query($con,"select * from $p[1]"."solutions where solverID='$id'");
+      $s=mysqli_query($con,"select * from $p[0]"."solutions where solverID='$id'");
 
       while($solutions=mysqli_fetch_array($s,MYSQLI_NUM))
       {
 
-        $z=mysqli_query($con,"select * from $p[1]"."buginfo where ID='$solutions[2]'");
+        $z=mysqli_query($con,"select * from $p[0]"."buginfo where ID='$solutions[2]'");
         $zz=mysqli_fetch_array($z,MYSQLI_NUM);
+        $z1=mysqli_query($con,"select * from projects where ID='$p[0]'");
+        $zz1=mysqli_fetch_array($z1,MYSQLI_NUM);
         $state="";
         if($solutions[4]==1)
           $state="通过";
@@ -155,10 +157,10 @@ Session_Start();
       <div class=\"span12\">
         <div class=\"widget-box\">
           <div class=\"widget-title\"> <span class=\"icon\"> <i class=\"icon-list\"></i> </span>
-            <h5><a href=\"project.php?ID=".$p[1]."&type=0\">".$p[2]."</a></h5>
+            <h5><a href=\"project.php?ID=".$p[0]."&type=0\">".$zz1[5]."</a></h5>
             <span class=\"icon\"></span>
             <span class=\"icon\"> 来源Bug </span>
-            <h5><a href=\"bug.php?bugID=".$solutions[2]."&projectID=".$p[1]."\">".$zz[6]."</a></h5>
+            <h5><a href=\"bug.php?bugID=".$solutions[2]."&projectID=".$p[0]."\">".$zz[6]."</a></h5>
             <h5><span class=\"date badge badge-important\">".$state."</span></h5>
           </div>
           <div class=\"widget-content\">

@@ -130,7 +130,7 @@ Session_Start();
   }
   mysqli_select_db($con,"bugfade");
    $id=$_SESSION["ID"];
-   $result1=mysqli_query($con,"select projectID from $id"."project");
+   $result1=mysqli_query($con,"select distinct projectID from $id"."project");
    while($p=mysqli_fetch_array($result1,MYSQLI_NUM))
    {
     $test_group=mysqli_query($con,"select memberID from $p[0]"."membermanage where position = 'tester' and memberID='$id' ");
@@ -188,7 +188,7 @@ Session_Start();
   }
   mysqli_select_db($con,"bugfade");
    $id=$_SESSION["ID"];
-   $result1=mysqli_query($con,"select projectID from $id"."project");
+   $result1=mysqli_query($con,"select distinct projectID from $id"."project");
    while($p=mysqli_fetch_array($result1,MYSQLI_NUM))
    {
     $test_group=mysqli_query($con,"select memberID from $p[0]"."membermanage where position = 'tester' and memberID='$id' ");

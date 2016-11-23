@@ -129,14 +129,14 @@ $con = mysqli_connect("localhost","root","");
               <ul>
                  <?php     
                  $usrID=$_SESSION["ID"];
-              $sql="select * from ".$usrID."project";
+              $sql="select distinct projectID from ".$usrID."project";
               $result = mysqli_query($con,$sql);
               while($row = mysqli_fetch_array($result,MYSQLI_NUM)){
-              $sql1="select * from ".$row[1]."membermanage where memberID='$usrID'";
+              $sql1="select * from ".$row[0]."membermanage where memberID='$usrID'";
               $result1 = mysqli_query($con,$sql1);
               $row1 = mysqli_fetch_array($result1,MYSQLI_NUM);
               if($row1[1]=="developer"){
-                   $sql2="select * from ".$row[1]."buginfo";
+                   $sql2="select * from ".$row[0]."buginfo";
                    $result2 = mysqli_query($con,$sql2);
                    while($row2=mysqli_fetch_array($result2,MYSQLI_NUM)){
                     if($row2[2]=="newAdd"){
@@ -145,11 +145,11 @@ $con = mysqli_connect("localhost","root","");
                       $result3 = mysqli_query($con,$sql3);
                       $row3=mysqli_fetch_array($result3,MYSQLI_NUM);
 
-                      $sql4="select * from ".$row[1]."buggroup where bugID='$row2[0]'";
+                      $sql4="select * from ".$row[0]."buggroup where bugID='$row2[0]'";
                       $result4 = mysqli_query($con,$sql4);
                       $row4=mysqli_fetch_array($result4,MYSQLI_NUM);
 
-                      $sql5="select * from ".$row[1]."membergroup where name='$usrID'";
+                      $sql5="select * from ".$row[0]."membergroup where name='$usrID'";
                       $result5 = mysqli_query($con,$sql5);
                       $row5=mysqli_fetch_array($result5,MYSQLI_NUM);
 
@@ -161,7 +161,7 @@ $con = mysqli_connect("localhost","root","");
                   ".$row2[6]."   ".$row2[1]."
                    </a><span class=\"by label\">Creator:".$row3[1]."</span> <span class=\"date badge badge-important\">".$row2[3]."</span> </div>
                   <div class=\"pull-right\"> <a 
-                  class=\"tip\" href=\"insertAction/acceptBugAction.php?bugID=$row2[0]&projectID=$row[1]\" onclick=\"acceptBug()\" title=\"Accept\"><i class=\"icon-pencil\"></i></a> </div>
+                  class=\"tip\" href=\"insertAction/acceptBugAction.php?bugID=$row2[0]&projectID=$row[0]\" onclick=\"acceptBug()\" title=\"Accept\"><i class=\"icon-pencil\"></i></a> </div>
                 </li>";
                     }
                    }
