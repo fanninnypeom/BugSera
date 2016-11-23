@@ -494,7 +494,7 @@ $result=mysqli_query($con,$s);
 </div>
 
 <!--end-Footer-part--> 
-<div  class="widget-box" id="applyForm" style="display:none ;position:absolute; top:100px; right:400px;width:600px; height:160px; " >
+<div  class="widget-box" id="applyForm" style="display:none ;position:absolute; top:100px; right:400px;width:600px; height:105px; " >
         <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
           <h5>选择分组</h5>
         </div>

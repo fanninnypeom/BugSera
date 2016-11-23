@@ -390,6 +390,7 @@ function search(){
     userID: userID
     },
     success: function(data){
+//        console.log(data);
         sin=data;
     }
 })

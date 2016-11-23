@@ -8,26 +8,31 @@ $con = mysqli_connect("localhost","root","");
   die('Could not connect: ' . mysql_error());
   }
   mysqli_select_db($con,"BugFade");
-  $result1=mysqli_query($con,"select projectID from $id"."project");
     $re = array();
 	for($i=0;$i<10;$i++) {
 	for($j=0;$j<2;$j++) {
 	$re[$i][$j]=$i;
 		}
 	}
-  while($p=mysqli_fetch_array($result1,MYSQLI_NUM))
-   {
-   	for($i=0;$i<10;$i++){
-   	$tem=9-$i;
-   	$ddd=date("Y-m-d",strtotime("-".$tem." day"));
-   	$result1=mysqli_query($con,"select ID from $p[0]"."buginfo where createdTime='$ddd' and creatorID='$id'");
-   	$count=0;
-   	while($p1=mysqli_fetch_array($result1,MYSQLI_NUM)){
-   			$count++;
-   	}
-   	$re[$i][1]=$count;
+      for($i=0;$i<10;$i++){
+      $tem=9-$i;
+      $ddd=date("Y-m-d",strtotime("-".$tem." day"));
+      $result1=mysqli_query($con,"select * from $id"."project");
+        $count=0;
+        while($p=mysqli_fetch_array($result1,MYSQLI_NUM)){
+          $result2=mysqli_query($con,"select ID from $p[1]"."buginfo where createdTime='$ddd' and creatorID='$id'");
+
+    //echo "select ID from $p[0]"."buginfo where createdTime='$ddd' and creatorID='$id'";
+          
+          while($p1=mysqli_fetch_array($result2,MYSQLI_NUM)){
+             $count++;
+        }
+}    
+
+      $re[$i][1]=$count;
    }
-}
+
+
 	echo json_encode($re);
 
 ?>

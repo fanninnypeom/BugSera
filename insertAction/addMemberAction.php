@@ -34,7 +34,7 @@ $projectName=$row[5];
 
 $s="INSERT INTO "."$userID"."project (ID,projectID,projectName)
 VALUES
-('$userID','$projectID','projectName')";
+('$userID','$projectID','$projectName')";
 $result = mysqli_query($con,$s);
 
 

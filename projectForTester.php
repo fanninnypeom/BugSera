@@ -378,7 +378,7 @@ $createrName=$t1[1];
                     $t3=mysqli_fetch_array($result3,MYSQLI_NUM);
                     $Name=$t3[1];
                     $Email=$t3[3];
-                    $Reputation=$t2[2];
+                    $Reputation=$t3[4];
                     $s4="select * from $ID"."MemberGroup"." where name='$t2[0]'";
                     $Position;
                     $result4 = mysqli_query($con,$s4);
@@ -494,7 +494,8 @@ function submitBug(){
     type:type
   }
 })
-       
+  location.reload(true);   
+     
 }
 
 
