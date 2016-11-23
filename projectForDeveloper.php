@@ -489,7 +489,8 @@ function submitBug(){
     type:type
   }
 })
-       
+    location.reload(true);   
+     
 }
 
 

@@ -292,7 +292,7 @@ function addSolution(){
     description: description
       }
 }) 
-//location.reload(true);   
+location.reload(true);   
 
 }
 
