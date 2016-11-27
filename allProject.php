@@ -130,11 +130,13 @@ exit();
   mysqli_select_db($con,"BugFade");
   $id=$_SESSION["ID"];
   
-        $s2="select * from projects";
+
+        $s2="select * from pprojects";
         $result2 = mysqli_query($con,$s2);
-    while($t=mysqli_fetch_array($result2,MYSQLI_NUM)){
-        $name=$t[5];
-        $content=$t[4];
+   
+    while($t=$result2->fetch_array(MYSQLI_NUM)){
+        $name=$t[2];
+        $content=$t[1];
         $projectID=$t[0];
     echo '<div class="row-fluid">
       <div class="span12">

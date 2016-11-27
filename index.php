@@ -73,9 +73,7 @@ $con->query($sql);
 //call projectNum('user17project')
 $sql="
 delimiter $$
-
 drop procedure if exists projectNum$$
-
 create procedure projectNum( table_id varchar(25) )
 begin
   set @temp_query = 'drop temporary table if exists temp_cursor_table';
@@ -122,11 +120,12 @@ delimiter ;
 
 $result=mysqli_query($con,$sql);
 
-//////////////////////定义视图
-
 $sql="
-DROP VIEW IF EXISTS 'member';
-create algorithm=merge view member(id,position,group) as select worker.id,name,sex from ".$ID.",student where worker.id = student.w_id with local check option;
+DROP VIEW IF EXISTS pprojects;";
+
+$result=mysqli_query($con,$sql);
+
+$sql="create view pprojects(id,content,name) as select projects.ID,projects.description,projects.name from projects with local check option;
 ";
 $result=mysqli_query($con,$sql);
 
