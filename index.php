@@ -69,6 +69,66 @@ while($t2=mysqli_fetch_array($result,MYSQLI_NUM)){
 }
 $sql=$sql." END;";
 $con->query($sql);
+///////////////////定义存储过程
+//call projectNum('user17project')
+$sql="
+delimiter $$
+
+drop procedure if exists projectNum$$
+
+create procedure projectNum( table_id varchar(25) )
+begin
+  set @temp_query = 'drop temporary table if exists temp_cursor_table';
+  prepare pst from @temp_query;
+  execute pst;
+  drop prepare pst; -- or
+  -- deallocate prepare pst;
+
+  set @temp_table_query='create temporary table temp_cursor_table ';
+  set @temp_table_query=concat( @temp_table_query, ' select ID from ' );
+  set @temp_table_query=concat( @temp_table_query, table_id );
+
+  prepare pst from @temp_table_query;
+  execute pst;
+  drop prepare pst;
+
+  -- now write your actual cursor and update statements
+  -- in a separate block
+  begin
+    declare done int default false;
+    declare stmt1 varchar(1024);
+    declare stmt2 varchar(1024);
+    declare count int;
+    declare id varchar(20);    
+    declare getid cursor for  
+              select ID from temp_cursor_table;
+    declare continue handler for not found set done = 1;
+
+    set count=0;
+    open getid;
+    fetch getid into id;
+    repeat
+      set count=count+1;
+      fetch getid into id;
+    until done end repeat;
+    close getid;
+    select count;
+  end;
+end;
+$$
+
+delimiter ;
+";
+
+$result=mysqli_query($con,$sql);
+
+//////////////////////定义视图
+
+$sql="
+DROP VIEW IF EXISTS 'member';
+create algorithm=merge view member(id,position,group) as select worker.id,name,sex from ".$ID.",student where worker.id = student.w_id with local check option;
+";
+$result=mysqli_query($con,$sql);
 
 
 ?>
@@ -231,45 +291,107 @@ $con->query($sql);
               <ul class="site-stats">
 <?php 
 $myProjectNum=0;
+$table=$ID."project";
+$result=$con->query("call projectNum('$table')");
+$row=$result->fetch_array(MYSQLI_ASSOC);
+$myProjectNum=$myProjectNum+$row['count'];
+
+
+$con = mysqli_connect("localhost","root","");
+  if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+$z=mysqli_select_db($con,"bugfade");
+//$row = $result->fetch_array(MYSQLI_ASSOC);
+//$row=$result->fetch_array(MYSQLI_ASSOC);
+//$myProjectNum=$row["count"];
+//$myProjectNum=mysqli_fetch_array($result,MYSQLI_NUM)[0];
+/*
 $result=mysqli_query($con,"select * from ".$ID."project");
 while($t2=mysqli_fetch_array($result,MYSQLI_NUM)){
   $myProjectNum=$myProjectNum+1;
 }
-
+*/
 $result=mysqli_query($con,"select * from users where ID='$ID'");
 $t2=mysqli_fetch_array($result,MYSQLI_NUM);
 $reputation=$t2[4];
 
 $totalUsers=0;
+$table="users";
+$result=$con->query("call projectNum('$table')");
+//print_r($result);
+$row=$result->fetch_array(MYSQLI_ASSOC);
+$totalUsers=$totalUsers+$row['count'];
+
+$con = mysqli_connect("localhost","root","");
+  if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+$z=mysqli_select_db($con,"bugfade");
+
+
+/*
 $result=mysqli_query($con,"select * from users");
 while($t2=mysqli_fetch_array($result,MYSQLI_NUM)){
   $totalUsers=$totalUsers+1;
 }
-
+*/
 
 $totalProjects=0;
+$table="projects";
+$result=$con->query("call projectNum('$table')");
+//print_r($result);
+$row=$result->fetch_array(MYSQLI_ASSOC);
+$totalProjects=$totalProjects+$row['count'];
+
+$con = mysqli_connect("localhost","root","");
+  if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+$z=mysqli_select_db($con,"bugfade");
+
+/*
 $result=mysqli_query($con,"select * from projects");
 while($t2=mysqli_fetch_array($result,MYSQLI_NUM)){
   $totalProjects=$totalProjects+1;
 }
+*/
 
 $totalBugs=0;
 $result=mysqli_query($con,"select projectID from ".$ID."project");
 while($t2=mysqli_fetch_array($result,MYSQLI_NUM)){
-  $result1=mysqli_query($con,"select ID from $t2[0]"."buginfo");
+   $result1=mysqli_query($con,"select ID from $t2[0]"."buginfo");
   while($t3=mysqli_fetch_array($result1,MYSQLI_NUM)){
     $totalBugs=$totalBugs+1;
   }
 }
 
+
 $totalSolutions=0;
 $result=mysqli_query($con,"select projectID from ".$ID."project");
 while($t2=mysqli_fetch_array($result,MYSQLI_NUM)){
+/*
+    $table=$t2[0]."solutions";
+    $result=$con->query("call projectNum('$table')");
+    $row=$result->fetch_array(MYSQLI_ASSOC);
+    $totalSolutions=$totalSolutions+$row['count'];
+    $con = mysqli_connect("localhost","root","");
+    if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+  $z=mysqli_select_db($con,"bugfade");
+  */
+
   $result1=mysqli_query($con,"select ID from $t2[0]"."solutions");
   while($t3=mysqli_fetch_array($result1,MYSQLI_NUM)){
     $totalSolutions=$totalSolutions+1;
   }
 }
+
 
 
 ?>

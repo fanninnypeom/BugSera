@@ -7,6 +7,7 @@
 Session_Start(); 
 $ID=$_GET['ID'];
 
+//////////////////////定义视图
 
 
 $con = mysqli_connect("localhost","root","");
@@ -15,6 +16,18 @@ $con = mysqli_connect("localhost","root","");
   die('Could not connect: ' . mysql_error());
   }
   mysqli_select_db($con,"BugFade");
+
+
+$sql="
+DROP VIEW IF EXISTS member;";
+
+$result=mysqli_query($con,$sql);
+
+$sql="create algorithm=merge view member(id,position,groupName) as select ".$ID."membermanage.memberID,".$ID."membermanage.position,".$ID."membergroup.groupID from ".$ID."membergroup,".$ID."membermanage where ".$ID."membergroup.name = ".$ID."membermanage.memberID with local check option;
+";
+$result=mysqli_query($con,$sql);
+
+
 
 $s="select * from projects where ID='$ID'";
 $result = mysqli_query($con,$s);
@@ -29,6 +42,8 @@ $s1="select * from users where ID='$createrID'";
 $result1 = mysqli_query($con,$s1);
 $t1=mysqli_fetch_array($result1,MYSQLI_NUM);
 $createrName=$t1[1];
+
+
 
 
 ?>
@@ -352,7 +367,8 @@ $result=mysqli_query($con,$s);
               <?php 
                 $s2="select * from $ID"."membermanage"." where position='manager'";
                 $result2 = mysqli_query($con,$s2);
-
+ 
+                $result2 = mysqli_query($con,$s2);
                 while($t2=mysqli_fetch_array($result2,MYSQLI_NUM)){
                     $s3="select * from users where ID='$t2[0]'";
                     $result3 = mysqli_query($con,$s3);
@@ -388,9 +404,10 @@ $result=mysqli_query($con,$s);
               </thead>
               <tbody>
               <?php 
-                $s2="select * from $ID"."membermanage"." where position='developer'";
-                $result2 = mysqli_query($con,$s2);
-
+ //               $s2="select * from $ID"."membermanage"." where position='developer'";
+//                $result2 = mysqli_query($con,$s2);
+                  $s2="select * from member where position='developer'";
+                  $result2 = mysqli_query($con,$s2);
                 while($t2=mysqli_fetch_array($result2,MYSQLI_NUM)){
                     $s3="select * from users where ID='$t2[0]'";
                     $result3 = mysqli_query($con,$s3);
@@ -399,10 +416,11 @@ $result=mysqli_query($con,$s);
                     $Email=$t3[3];
                     $Reputation=$t3[4];
 
-                    $s4="select * from $ID"."MemberGroup"." where name='$t2[0]'";
-                    $result4 = mysqli_query($con,$s4);
-                    $t4=mysqli_fetch_array($result4,MYSQLI_NUM);
-                    $Position=$t4[0];
+   //                 $s4="select * from $ID"."MemberGroup"." where name='$t2[0]'";
+   //                 $result4 = mysqli_query($con,$s4);
+   //                 $t4=mysqli_fetch_array($result4,MYSQLI_NUM);
+     //               $Position=$t4[0];
+      $Position=$t2[2];
         /*            while($t4=mysqli_fetch_array($result4,MYSQLI_NUM)){
                       $s5="select * from $ID"."group"." where groupID='$t4[0]'";
                       $result5 = mysqli_query($con,$s5);
@@ -445,9 +463,10 @@ $result=mysqli_query($con,$s);
               </thead>
               <tbody>
               <?php 
-                $s2="select * from $ID"."membermanage"." where position='tester'";
-                $result2 = mysqli_query($con,$s2);
-
+ //               $s2="select * from $ID"."membermanage"." where position='tester'";
+ //               $result2 = mysqli_query($con,$s2);
+                $s2="select * from member where position='tester'";
+                  $result2 = mysqli_query($con,$s2);
                 while($t2=mysqli_fetch_array($result2,MYSQLI_NUM)){
                     $s3="select * from users where ID='$t2[0]'";
                     $result3 = mysqli_query($con,$s3);
@@ -456,10 +475,10 @@ $result=mysqli_query($con,$s);
                     $Email=$t3[3];
                     $Reputation=$t3[4];
 
-                    $s4="select * from $ID"."MemberGroup"." where name='$t2[0]'";
-                    $result4 = mysqli_query($con,$s4);
-                    $t4=mysqli_fetch_array($result4,MYSQLI_NUM);
-                    $Position=$t4[0];
+         //           $s4="select * from $ID"."MemberGroup"." where name='$t2[0]'";
+         //           $result4 = mysqli_query($con,$s4);
+         //           $t4=mysqli_fetch_array($result4,MYSQLI_NUM);
+                    $Position=$t2[2];
                     /*
                     while($t4=mysqli_fetch_array($result4,MYSQLI_NUM)){
                       $s5="select * from $ID"."group"." where groupID='$t4[0]'";

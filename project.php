@@ -19,6 +19,19 @@ $ID=$_GET['ID'];
 $type=$_GET['type'];
 $uID=$_SESSION["ID"]; //用户ID
 //根据type的不同跳转到不同的php页面，以实现对不同的角色显示不同的页面
+
+//////////////////////定义视图
+
+$sql="
+DROP VIEW IF EXISTS member;";
+
+$result=mysqli_query($con,$sql);
+
+$sql="create algorithm=merge view member(id,position,groupName) as select ".$ID."membermanage.memberID,".$ID."membermanage.position,".$ID."membergroup.groupID from ".$ID."membergroup,".$ID."membermanage where ".$ID."membergroup.name = ".$ID."membermanage.memberID with local check option;
+";
+$result=mysqli_query($con,$sql);
+
+
 if($type==0){
   $s="select position from $ID"."membermanage where memberID="."'$uID'";
   $result = mysqli_query($con,$s);
